@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>images/chart-40.png</file>
+        <file>images/jahminer icon.png</file>
+        <file>images/lock-40.png</file>
+        <file>images/settings-40.png</file>
+        <file>ToolBarButton.qml</file>
+    </qresource>
+</RCC>
