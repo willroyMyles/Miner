@@ -11,9 +11,9 @@ Button {
 
     Pane{
         background: Rectangle{
-            color: "#eee"
+            color: Literals.blueButtonColor
             implicitWidth: 100
-            implicitHeight: btn.height
+           // implicitHeight:  parent.height
         }
 
         Layout.fillHeight: true
@@ -22,18 +22,17 @@ Button {
             anchors.fill: parent
             Image {
                 id: name
-                source: imageSource
-                sourceSize.width: 20
+                source: imageSource==""? "":"../"+imageSource
+                sourceSize.width: imageSource==""? 0:20
             }
             Text{
                 text:textValue
+                font.weight: Literals.fontWeight
                 color: Literals.fontcolor
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
             }
         }
     }
 }
 
-/*##^## Designer {
-    D{i:5;anchors_height:100;anchors_width:100}
-}
- ##^##*/

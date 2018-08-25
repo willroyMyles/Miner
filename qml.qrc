@@ -5,6 +5,10 @@
         <file>images/jahminer icon.png</file>
         <file>images/lock-40.png</file>
         <file>images/settings-40.png</file>
-        <file>ToolBarButton.qml</file>
+        <file>subclass/ToolBarButton.qml</file>
+        <file>literals.h</file>
+        <file>main.cpp</file>
+        <file>subclass/BlueButton.qml</file>
+        <file>Banner.qml</file>
     </qresource>
 </RCC>
