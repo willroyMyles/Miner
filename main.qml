@@ -8,7 +8,9 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("JahMiner")
+    minimumHeight: 350
+    minimumWidth: 450
 
     header: ToolBar {
         id: toolbar
@@ -62,6 +64,17 @@ ApplicationWindow {
         SwipeView {
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            background: Rectangle{
+                color: "blue"
+
+            }
+
+            currentIndex: 1
+
+            GraphicsCardPage{
+            }
+
         }
 
         Pane {

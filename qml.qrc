@@ -10,5 +10,9 @@
         <file>main.cpp</file>
         <file>subclass/BlueButton.qml</file>
         <file>Banner.qml</file>
+        <file>subclass/GraphicsCard.qml</file>
+        <file>subclass/HorizontalSpacer.qml</file>
+        <file>GraphicsCardPage.qml</file>
+        <file>subclass/SimpleLabel.qml</file>
     </qresource>
 </RCC>
