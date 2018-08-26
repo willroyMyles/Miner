@@ -57,6 +57,7 @@ Chart {
      */
     property color pointColor
 
+
     /*!
      * Converts chart data to suitable format for Bar and RADAR charts.
      */
@@ -104,7 +105,7 @@ Chart {
                     fillColor: fillColor,
                     fill:true,
                     strokeColor: strokeColor,
-                    pointColor: pointColor
+                    pointColor: pointColor,
                 }
             ]
         }
@@ -119,7 +120,11 @@ Chart {
         scaleFontSize: 20,
         scaleFontFamily: "sans-serif",
         barValueSpacing: 10,
-        scaleFontColor: "#444444"
+        scaleFontColor: "#444444",
+        pointDotRadius: 0,
+                       lineTension: 0,
+                       bezierCurve: false,
+
     })
 
     Component.onCompleted: {
