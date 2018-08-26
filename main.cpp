@@ -1,3 +1,4 @@
+#include "dataprovider.h"
 #include "literals.h"
 #include <QApplication>
 #include <QGuiApplication>
@@ -13,6 +14,8 @@ int main(int argc, char *argv[])
     Literals lit;
 
     QQmlApplicationEngine engine;
+    DataProvider dataProvider;
+    engine.rootContext()->setContextProperty("dataProvider", &dataProvider);
     engine.rootContext()->setContextProperty("Literals",&lit);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

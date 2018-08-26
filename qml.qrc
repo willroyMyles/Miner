@@ -15,5 +15,8 @@
         <file>GraphicsCardPage.qml</file>
         <file>subclass/SimpleLabel.qml</file>
         <file>subclass/GraphItem.qml</file>
+        <file>subclass/charts/Chart.js</file>
+        <file>subclass/charts/Chart.qml</file>
+        <file>subclass/charts/MChart.qml</file>
     </qresource>
 </RCC>
