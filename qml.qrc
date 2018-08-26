@@ -18,5 +18,6 @@
         <file>subclass/charts/Chart.js</file>
         <file>subclass/charts/Chart.qml</file>
         <file>subclass/charts/MChart.qml</file>
+        <file>subclass/CustomBorder.qml</file>
     </qresource>
 </RCC>

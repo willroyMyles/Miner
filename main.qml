@@ -12,8 +12,22 @@ ApplicationWindow {
     minimumHeight: 350
     minimumWidth: 450
 
+
+//    background: Rectangle{
+//        border.color: Literals.borderColor
+//        color: Literals.darkBackgroundColor
+//        border.width: 12
+//    }
+
     header: ToolBar {
         id: toolbar
+        //padding : 5
+
+        background: Rectangle{
+            color: Literals.darkBackgroundColor
+            border.color: Literals.borderColor
+            border.width: Literals.borderWidth
+        }
         RowLayout {
             anchors.fill: parent
             spacing: 0
@@ -21,21 +35,15 @@ ApplicationWindow {
 
             }
 
-            Item {
-                Layout.fillWidth: true
-            }
-            ToolSeparator {
-            }
+           HorizontalSpacer{}
 
             ToolBarButton {
                 id: chartBtn
                 textValue: "Charts"
                 imageSource: "images/chart-40.png"
-            }
-            ToolSeparator {
-                bottomPadding: 0
-                topPadding: 0
-                padding: 0
+                onClicked: {
+                    console.log(textValue)
+                }
             }
             ToolBarButton {
                 id: poolBtn
@@ -44,8 +52,6 @@ ApplicationWindow {
                 onClicked: {
 
                 }
-            }
-            ToolSeparator {
             }
 
             ToolBarButton {
@@ -61,15 +67,16 @@ ApplicationWindow {
 
     ColumnLayout {
         anchors.fill: parent
+        spacing: 0
         SwipeView {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
             background: Rectangle{
-                color: "blue"
-
+                border.color: Literals.borderColor
+                border.width: Literals.borderWidth
+                color: Literals.transparent
             }
-
             currentIndex: 1
 
             GraphicsCardPage{
@@ -79,7 +86,13 @@ ApplicationWindow {
 
         Pane {
             Layout.fillWidth: true
-            padding: 10
+            //padding: 10
+            background: Rectangle{
+                color: Literals.darkBackgroundColor
+                border.color: Literals.borderColor
+                border.width: Literals.borderWidth
+            }
+
             RowLayout {
                 anchors.left: parent.left
                 anchors.right: parent.right

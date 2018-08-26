@@ -7,7 +7,7 @@ import QtGraphicalEffects 1.0
 Pane {
 
     background: Rectangle{
-        color: "transparent"
+        color: Literals.transparent
     }
 
     id: logo
@@ -18,7 +18,7 @@ Pane {
                 Image {
                     id: bannerImage
                     source: "images/jahminer icon.png"
-                    sourceSize.width: 20
+                    sourceSize.width: 25
                 }
 
 
@@ -26,11 +26,13 @@ Pane {
             id: title
             width: 68
             height: 39
-            color: "#2a2626"
+            color: Literals.fontcolor
             Layout.fillHeight: true
             verticalAlignment: Text.AlignVCenter
-            text: qsTr("JAHMINER")
-            font.weight: Literals.fontWeight
+            text: qsTr("  JAHMINER")
+            font.weight: Literals.fontWeightLighter
+            font.pixelSize: Qt.application.font.pixelSize * 1.9
+
         }
         }
 }

@@ -4,35 +4,63 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
-Button {
+
+Rectangle {
     id: btn
     property string imageSource: ""
     property string textValue: ""
 
-    Pane{
-        background: Rectangle{
-            color: Literals.blueButtonColor
-            implicitWidth: 100
-           // implicitHeight:  parent.height
+    signal clicked()
+
+
+    MouseArea{
+        anchors.fill: parent
+    hoverEnabled: true
+
+        onEntered: {
+            btn.color = Literals.blueButtonColorHovered
         }
 
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        RowLayout{
-            anchors.fill: parent
-            Image {
-                id: name
-                source: imageSource==""? "":"../"+imageSource
-                sourceSize.width: imageSource==""? 0:20
+        onExited: {
+            btn.color = Literals.blueButtonColor
+        }
+
+     onPressed: {
+         btn.color = Literals.blueButtonColorPressed
+     }
+     onReleased: {
+         btn.color = Literals.blueButtonColor
+     }
+        onClicked: {
+            btn.clicked
+        }
+    }
+
+        color: Literals.blueButtonColor
+        implicitWidth: 100
+        // implicitHeight:  parent.height
+        Behavior on color {
+
+            ColorAnimation {
+                duration: 100
             }
-            Text{
-                text:textValue
-                font.weight: Literals.fontWeight
-                color: Literals.fontcolor
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-            }
+        }
+
+    Layout.fillHeight: true
+    Layout.fillWidth: true
+    RowLayout {
+        anchors.fill: parent
+        Image {
+            id: name
+            source: imageSource == "" ? "" : "../" + imageSource
+            sourceSize.width: imageSource == "" ? 0 : 20
+        }
+        Text {
+            text: textValue
+            font.weight: Literals.fontWeight
+            color: Literals.fontcolor
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
         }
     }
 }
-

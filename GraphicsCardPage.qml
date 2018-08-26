@@ -8,6 +8,27 @@ import "subclass"
 
 Page {
     padding: 0
+    background: Rectangle{
+        //border.color: Literals.borderColor
+      //  border.width: Literals.borderWidth
+        color: Literals.transparent
+
+        Rectangle{
+            border.color: Literals.borderColor
+            border.width: Literals.borderWidth
+            anchors.left: parent.left
+            width: 1
+            Layout.fillHeight: true
+        }
+        Rectangle{
+            border.color: Literals.borderColor
+            border.width: Literals.borderWidth
+            anchors.right: parent.right
+            width: 1
+            Layout.fillHeight: true
+        }
+
+    }
 
 
         ScrollView {
@@ -18,13 +39,22 @@ Page {
             Layout.fillHeight: true
 
             clip: true
-            padding: 5
+            padding: 10
+
+
+
             background: Rectangle {
                 color: Literals.darkBackgroundColor
+             //   border.color: Literals.borderColor
+             //   border.width: Literals.borderWidth
+
             }
+
+
             ColumnLayout {
+
                 id: col
-                spacing: 5
+                spacing:5
                 width: scrollview.width- scrollview.padding * 2
 
                 // Layout.fillWidth: true
