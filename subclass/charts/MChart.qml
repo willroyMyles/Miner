@@ -27,6 +27,16 @@ import QtQuick 2.0
 import "Chart.js" as Charts
 
 Chart {
+
+    MouseArea{
+        id: area1
+        anchors.fill: parent
+
+        onHoveredChanged: {
+            parent.fillColor = "red"
+        }
+    }
+
     /*!
      * String array used as labels in charts.
      */
@@ -117,13 +127,13 @@ Chart {
     chartOptions: ({
         scaleLineWidth: 2,
         barShowStroke: false,
-        scaleFontSize: 20,
+        scaleFontSize: 10,
         scaleFontFamily: "sans-serif",
         barValueSpacing: 10,
         scaleFontColor: "#444444",
         pointDotRadius: 0,
-                       lineTension: 0,
-                       bezierCurve: false,
+        bezierCurve: false,
+
 
     })
 

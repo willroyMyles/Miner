@@ -13,6 +13,7 @@ class Literals : public QObject{
     Q_PROPERTY(QVariant blueButtonColor READ blueButtonColor CONSTANT)
     Q_PROPERTY(QVariant darkBackgroundColor READ darkBackgroundColor CONSTANT)
     Q_PROPERTY(QVariant chartBackgroundColor READ chartBackgroundColor CONSTANT)
+    Q_PROPERTY(QVariant transparent READ transparent CONSTANT)
 
 public:
     QVariant fontWeight(){return 65;}
@@ -20,6 +21,7 @@ public:
     QVariant blueButtonColor(){return "#ff00a9e3";}
     QVariant darkBackgroundColor(){return "#242424";}
     QVariant chartBackgroundColor(){return   QColor( 133,195,96)  ;}
+    QVariant transparent(){return   QColor( 133,195,96, 0)  ;}
 
 
 

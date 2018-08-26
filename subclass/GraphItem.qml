@@ -18,7 +18,7 @@ Pane {
     Layout.fillWidth: true
 
     background: Rectangle{
-        color: primaryColor
+        color: Literals.transparent
     }
         smooth: true
 
@@ -27,20 +27,29 @@ Pane {
 
 
         MChart {
-            id: chartBar3
+            id: areaChart
 
             Layout.fillWidth: true
             Layout.fillHeight: true
             chartType: Charts.ChartType.LINE
 
-            fillColor: "#345678"
+            fillColor: Literals.chartBackgroundColor
             labels: dataProvider.getLabels()
             values: dataProvider.getValues()
             strokeColor: "#72c4e8"
             pointColor: "#ffffff"
+
+            onValuesChanged: {
+                requestPaint();
+            }
         }
+
+
+
 }
 //        Component.onCompleted: {
 //            chartData = [4,6,3,6,9,4,9,3,6]
 //        }
+
+
 }
