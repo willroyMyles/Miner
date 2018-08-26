@@ -14,5 +14,6 @@
         <file>subclass/HorizontalSpacer.qml</file>
         <file>GraphicsCardPage.qml</file>
         <file>subclass/SimpleLabel.qml</file>
+        <file>subclass/GraphItem.qml</file>
     </qresource>
 </RCC>

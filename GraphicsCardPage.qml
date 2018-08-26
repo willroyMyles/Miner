@@ -20,7 +20,7 @@ Page {
             clip: true
             padding: 5
             background: Rectangle {
-                color: "#77000000"
+                color: Literals.darkBackgroundColor
             }
             ColumnLayout {
                 id: col
