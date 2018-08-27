@@ -23,6 +23,7 @@ SOFTWARE.
 
 
 #include "dataprovider.h"
+#include <QDebug>
 
 /*!
  * \brief Class provides test data set for MiloCharts Demo project.
@@ -32,6 +33,8 @@ SOFTWARE.
 DataProvider::DataProvider(QObject *parent) :
     QObject(parent)
 {
+    valueList.append( {1.5, 2.5, 1.5, 2.5, 2.0, 1.0, 0.5});
+    labelList.append({ "8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "21:00" });
 }
 
 /*!
@@ -40,7 +43,8 @@ DataProvider::DataProvider(QObject *parent) :
  */
 QList<qreal> DataProvider::getValues() const
 {
-    return { 1.5, 2.5, 1.5, 2.5, 2.0, 1.0, 0.5 };
+   // return { 1.5, 2.5, 1.5, 2.5, 2.0, 1.0, 0.5 };
+    return valueList;
 }
 
 /*!
@@ -49,8 +53,9 @@ QList<qreal> DataProvider::getValues() const
  */
 QStringList DataProvider::getLabels() const
 {
-    return QStringList({ "8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00" });
+    //return QStringList({ "8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00" });
    // return {"lab","hfi"};
+    return labelList;
 }
 
 /*!
@@ -67,4 +72,27 @@ QStringList DataProvider::getColors() const
                          "#dddddd",
                          "#c4c4c4"
                        });
+}
+
+qreal DataProvider::getAverage()
+{
+    int i;
+    qreal total =0;
+    for(i =0; i < valueList.size();i++){
+        total += valueList.at(i);
+    }
+    return i/total;
+}
+
+void DataProvider::addToSeries()
+{
+    if(valueList.length() > 25){
+   valueList.takeFirst();
+    labelList.takeFirst();
+    }
+
+
+    valueList.append(qreal(qrand()%1000));
+    labelList.append("");
+    qDebug() << "clicked";
 }

@@ -19,6 +19,7 @@ Pane {
                     id: bannerImage
                     source: "images/jahminer icon.png"
                     sourceSize.width: 25
+                    rotation: 180
                 }
 
 

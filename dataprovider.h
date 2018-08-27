@@ -36,6 +36,13 @@ public:
     Q_INVOKABLE QList<qreal> getValues() const;
     Q_INVOKABLE QStringList getLabels() const;
     Q_INVOKABLE QStringList getColors() const;
+    Q_INVOKABLE qreal getAverage();
+    Q_INVOKABLE void addToSeries();
+
+
+private:
+    QList<qreal> valueList;// y-axis
+    QStringList labelList ;//x-axis;
 };
 
 #endif // DATAPROVIDER_H

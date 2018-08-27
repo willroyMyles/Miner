@@ -2,7 +2,6 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
 Page {
@@ -38,13 +37,16 @@ Page {
                 right: parent.right
             }
 
-            Switch {
-                id: switchBtn
-            }
+           CustomSwitch{
+
+           }
 
             Text {
                 id: minerIndex
                 text: "Miner index"
+                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                color: Literals.fontcolor
+
             }
 
             HorizontalSpacer {

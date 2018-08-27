@@ -37,7 +37,7 @@ Rectangle {
     }
 
         color: Literals.blueButtonColor
-        implicitWidth: 100
+        implicitWidth: 40
         // implicitHeight:  parent.height
         Behavior on color {
 

@@ -15,9 +15,11 @@ Rectangle
     property int commonBorderWidth : 1
 
     z : -1
+    implicitWidth: 1
 
 
-    color: borderColor
+
+    color: Literals.transparent
 
     anchors
     {

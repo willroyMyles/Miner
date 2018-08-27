@@ -28,15 +28,6 @@ import "Chart.js" as Charts
 
 Chart {
 
-    MouseArea{
-        id: area1
-        anchors.fill: parent
-
-        onHoveredChanged: {
-            parent.fillColor = "red"
-        }
-    }
-
     /*!
      * String array used as labels in charts.
      */
@@ -136,6 +127,19 @@ Chart {
 
 
     })
+
+    onValuesChanged: {
+        if (chartType === Charts.ChartType.BAR
+                || chartType === Charts.ChartType.RADAR) {
+            chartData = prepareBarChartData()
+        } else if (chartType === Charts.ChartType.PIE
+                   || chartType === Charts.ChartType.DOUGHNUT
+                   || chartType === Charts.ChartType.POLAR) {
+            chartData = preparePieChartData()
+        } else if (chartType === Charts.ChartType.LINE) {
+            chartData = prepareLineChartData()
+        }
+    }
 
     Component.onCompleted: {
         if (chartType === Charts.ChartType.BAR

@@ -19,5 +19,6 @@
         <file>subclass/charts/Chart.qml</file>
         <file>subclass/charts/MChart.qml</file>
         <file>subclass/CustomBorder.qml</file>
+        <file>subclass/CustomSwitch.qml</file>
     </qresource>
 </RCC>

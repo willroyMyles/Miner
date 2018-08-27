@@ -105,6 +105,9 @@ ApplicationWindow {
                     Layout.fillWidth: true
                     text: "Support Jahshaka\nwww.jahshaka.com"
                     horizontalAlignment: Text.AlignHCenter
+                    color: Literals.fontcolor
+                    font.pixelSize: Qt.application.font.pixelSize * .8
+                    font.weight: Literals.fontWeight
                 }
                 BlueButton {
                     id: helpBtn

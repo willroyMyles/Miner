@@ -5,44 +5,52 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
-Pane {
+Rectangle {
     id: btn
     property string imageSource: ""
     property string textValue: ""
-    property string bgcolor: Literals.darkBackgroundColor
-    padding: 0
+    property string bgcolor: Literals.transparent
 
     signal clicked()
 
     Behavior on bgcolor {
 
         ColorAnimation {
-            from: "white"
-            to: "black"
             duration: 200
         }
     }
 
-
     implicitWidth: 100
-    //implicitHeight: parent.height
-    background: Rectangle{
-        color: Literals.transparent
-    }
-
-
+    color: bgcolor
 
     MouseArea {
         anchors.fill: parent
+        hoverEnabled: true
 
-        onClicked: btn.clicked()
+        onEntered: {
+            bgcolor = Literals.buttonColorHovered
+        }
+
+        onExited: {
+            bgcolor = Literals.transparent
+        }
+
+        onPressed: {
+            bgcolor = Literals.buttonColorPressed
+        }
+        onReleased: {
+            bgcolor = Literals.transparent
+        }
+        onClicked: {
+            btn.clicked
+        }
     }
 
     Layout.fillHeight: true
     RowLayout {
         anchors.fill: parent
 
-        Rectangle{
+        Rectangle {
             Layout.fillHeight: true
             implicitWidth: 1
             implicitHeight: parent.height
@@ -50,6 +58,13 @@ Pane {
             anchors.left: parent.left
             color: Literals.borderColor
         }
+
+        CustomBorder{
+            commonBorder: false
+            borderColor: Literals.borderColor
+            bBorderwidth: 1
+        }
+
         Image {
             id: name
             source: "../" + imageSource
@@ -58,6 +73,7 @@ Pane {
         Text {
             text: textValue
             color: Literals.fontcolor
+            font.weight: Literals.fontWeight
         }
     }
 }
