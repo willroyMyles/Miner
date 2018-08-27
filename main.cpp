@@ -14,8 +14,9 @@ int main(int argc, char *argv[])
     Literals lit;
 
     QQmlApplicationEngine engine;
-    DataProvider dataProvider;
-    engine.rootContext()->setContextProperty("dataProvider", &dataProvider);
+    //DataProvider dataProvider;
+    //engine.rootContext()->setContextProperty("dataProvider", &dataProvider);
+    qmlRegisterType<DataProvider>("DataProvider",1,0,"DataProvider");
     engine.rootContext()->setContextProperty("Literals",&lit);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

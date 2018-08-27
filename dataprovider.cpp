@@ -31,10 +31,22 @@ SOFTWARE.
  */
 
 DataProvider::DataProvider(QObject *parent) :
-    QObject(parent)
+    QObject(parent),summation(0),count(0)
 {
     valueList.append( {1.5, 2.5, 1.5, 2.5, 2.0, 1.0, 0.5});
-    labelList.append({ "8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "21:00" });
+    labelList.append({ "","","","","","","" });
+
+    for(int i =0; i < valueList.size();i++){
+        summation += valueList.at(i);
+        count = i+1;
+        if(valueList.at(i)> maxValue_){
+            maxValue_ = valueList.at(i);
+            emit maxValueChanged(maxValue_);
+        }
+    }
+
+    qDebug() << "data provider created";
+    qDebug() << summation << count;
 }
 
 /*!
@@ -76,12 +88,7 @@ QStringList DataProvider::getColors() const
 
 qreal DataProvider::getAverage()
 {
-    int i;
-    qreal total =0;
-    for(i =0; i < valueList.size();i++){
-        total += valueList.at(i);
-    }
-    return i/total;
+    return summation/count/summation;
 }
 
 void DataProvider::addToSeries()

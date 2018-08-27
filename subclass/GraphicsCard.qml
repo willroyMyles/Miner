@@ -12,6 +12,9 @@ Page {
     property alias mean: mean.text
     property alias latest: latest.text
 
+
+
+
     padding: 15
     topPadding: 10
     Layout.fillWidth: true

@@ -5,13 +5,20 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
+import DataProvider 1.0
+
 import "charts"
 import "charts/Chart.js" as Charts
 
 Pane {
     property string accentColor: "#21a2ff"
     property string primaryColor: "#253856"
+    property double average: dataprovider.getAverage()
 
+
+    DataProvider{
+        id:dataprovider
+    }
 
     Layout.fillHeight: true
     Layout.fillWidth: true
@@ -26,9 +33,10 @@ Pane {
         id: area
 
         onClicked: {
-            dataProvider.addToSeries();
-            areaChart.labels= dataProvider.getLabels()
-            areaChart.values= dataProvider.getValues()
+            dataprovider.addToSeries();
+            areaChart.labels= dataprovider.getLabels()
+            areaChart.values= dataprovider.getValues()
+            average = dataprovider.getAverage()
             areaChart.repaint()
         }
     }
@@ -39,6 +47,8 @@ Pane {
         anchors.fill: parent
 
         Rectangle{
+
+            //grapg background rectangle
             anchors{
                 left: areaChart.left
                 right: areaChart.right
@@ -50,7 +60,7 @@ Pane {
                 bottomMargin: 17
             }
 
-            color: "blue"
+            color: Literals.transparent
         }
 
         MChart {
@@ -63,8 +73,8 @@ Pane {
             chartType: Charts.ChartType.LINE
 
             //fillColor: Literals.chartBackgroundColor
-            labels: dataProvider.getLabels()
-            values: dataProvider.getValues()
+            labels: dataprovider.getLabels()
+            values: dataprovider.getValues()
             strokeColor: "#72c4e8"
             pointColor: "#ffffff"
 
@@ -112,13 +122,13 @@ Pane {
                 rotation: 180
 
                 Component.onCompleted: {
-                    console.log(dataProvider.getAverage())
+                    console.log(dataprovider.getAverage())
                 }
 
                 gradient: Gradient{
                     GradientStop{position: 0.0; color: Literals.blueButtonColor}
-                    GradientStop{position: 0.4; color: Literals.darkBackgroundColor}
-                    GradientStop{position: 0.4; color: Literals.blueButtonColorPressed}
+                    GradientStop{position: average; color: Literals.darkBackgroundColor}
+                    GradientStop{position: average; color: Literals.blueButtonColorPressed}
                 }
             }
 

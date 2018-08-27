@@ -30,8 +30,10 @@ SOFTWARE.
 class DataProvider : public QObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(qreal maxValue READ maxValue NOTIFY maxValueChanged)
 public:
-    explicit DataProvider(QObject *parent = 0);
+    explicit DataProvider(QObject *parent = Q_NULLPTR);
 
     Q_INVOKABLE QList<qreal> getValues() const;
     Q_INVOKABLE QStringList getLabels() const;
@@ -39,10 +41,18 @@ public:
     Q_INVOKABLE qreal getAverage();
     Q_INVOKABLE void addToSeries();
 
+    qreal maxValue(){return maxValue_;}
+
 
 private:
     QList<qreal> valueList;// y-axis
     QStringList labelList ;//x-axis;
+    qreal summation;
+    qreal count;
+    qreal maxValue_ = 0;
+
+signals:
+    void maxValueChanged(qreal);
 };
 
 #endif // DATAPROVIDER_H
