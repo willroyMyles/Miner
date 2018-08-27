@@ -33,8 +33,8 @@ SOFTWARE.
 DataProvider::DataProvider(QObject *parent) :
     QObject(parent),summation(0),count(0)
 {
-    valueList.append( {1.5, 2.5, 1.5, 2.5, 2.0, 1.0, 0.5});
-    labelList.append({ "","","","","","","" });
+    valueList.append( 0.0);
+    labelList.append("");
 
     for(int i =0; i < valueList.size();i++){
         summation += valueList.at(i);
@@ -45,8 +45,6 @@ DataProvider::DataProvider(QObject *parent) :
         }
     }
 
-    qDebug() << "data provider created";
-    qDebug() << summation << count;
 }
 
 /*!
@@ -91,15 +89,68 @@ qreal DataProvider::getAverage()
     return summation/count/summation;
 }
 
-void DataProvider::addToSeries()
+void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
+
+    if(low == 0.0) low = yValue;
+    if(low > yValue) low = yValue;
+    emit lowChanged();
+
     if(valueList.length() > 25){
    valueList.takeFirst();
     labelList.takeFirst();
     }
 
 
-    valueList.append(qreal(qrand()%1000));
+    if(yValue> maxValue_){
+        maxValue_ = yValue;
+        emit maxValueChanged(maxValue_);
+    }
+
+    valueList.append(yValue);
     labelList.append("");
-    qDebug() << "clicked";
+
+    latest = yValue;
+    emit latestChanged();
+    emit dataAdded();
+
+
+}
+
+void DataProvider::randomSeries()
+{
+
+    auto value = qreal(qrand()%100);
+    addToSeries(value);
+
+}
+
+qreal DataProvider::getHigh() const
+{
+    return this->maxValue_;
+}
+
+qreal DataProvider::getLow() const
+{
+    return low;
+}
+
+qreal DataProvider::getMean() const
+{
+    return mean;
+}
+
+qreal DataProvider::getLatest() const
+{
+    return latest;
+}
+
+QString DataProvider::getCardName() const
+{
+    return cardName;
+}
+
+QString DataProvider::getStatus() const
+{
+    return status;
 }

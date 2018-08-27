@@ -39,7 +39,17 @@ public:
     Q_INVOKABLE QStringList getLabels() const;
     Q_INVOKABLE QStringList getColors() const;
     Q_INVOKABLE qreal getAverage();
-    Q_INVOKABLE void addToSeries();
+    Q_INVOKABLE void addToSeries( qreal yValue, QString xValue = Q_NULLPTR);
+
+    Q_INVOKABLE qreal getHigh() const;
+    Q_INVOKABLE qreal getLow() const;
+    Q_INVOKABLE qreal getMean() const;
+    Q_INVOKABLE qreal getLatest() const;
+    Q_INVOKABLE QString getCardName() const;
+    Q_INVOKABLE QString getStatus() const;
+
+
+    Q_INVOKABLE void randomSeries();
 
     qreal maxValue(){return maxValue_;}
 
@@ -51,8 +61,24 @@ private:
     qreal count;
     qreal maxValue_ = 0;
 
+    qreal high = 10.0;
+    qreal low = 0.0;
+    qreal mean = 0.5;
+    qreal latest = 0.0;
+    QString cardName = "gfore 10-22";
+    QString status = "Inactive";
+
 signals:
     void maxValueChanged(qreal);
+    void cardNameChanged();
+    void statusChanged();
+    void highChanged();
+    void lowChanged();
+    void meanChanged();
+    void latestChanged();
+    void dataAdded();
+
+
 };
 
 #endif // DATAPROVIDER_H

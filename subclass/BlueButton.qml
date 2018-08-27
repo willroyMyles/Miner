@@ -37,7 +37,7 @@ Rectangle {
     }
 
         color: Literals.blueButtonColor
-        implicitWidth: 40
+        implicitWidth: 120
         // implicitHeight:  parent.height
         Behavior on color {
 
@@ -47,7 +47,7 @@ Rectangle {
         }
 
     Layout.fillHeight: true
-    Layout.fillWidth: true
+    Layout.fillWidth: false
     RowLayout {
         anchors.fill: parent
         Image {

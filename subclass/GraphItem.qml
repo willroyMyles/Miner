@@ -15,10 +15,30 @@ Pane {
     property string primaryColor: "#253856"
     property double average: dataprovider.getAverage()
 
+    property string cardname: dataprovider.getCardName()
+    property string status: dataprovider.getStatus()
+    property real high: dataprovider.getHigh()
+    property real low: dataprovider.getLow()
+    property real mean: dataprovider.getMean()
+    property real latest: dataprovider.getLatest()
 
     DataProvider{
         id:dataprovider
+
+        onMaxValueChanged: {  high = dataprovider.getHigh()    }
+        onCardNameChanged: {  cardname = dataprovider.getCardName()  }
+        onLatestChanged: { latest = dataprovider.getLatest() }
+        onLowChanged: {low = dataprovider.getLow()}
+        onStatusChanged: {status = dataprovider.getStatus() }
+
+        onDataAdded: {
+            areaChart.labels= dataprovider.getLabels()
+            areaChart.values= dataprovider.getValues()
+        }
+
+
     }
+
 
     Layout.fillHeight: true
     Layout.fillWidth: true
@@ -33,11 +53,15 @@ Pane {
         id: area
 
         onClicked: {
-            dataprovider.addToSeries();
-            areaChart.labels= dataprovider.getLabels()
-            areaChart.values= dataprovider.getValues()
-            average = dataprovider.getAverage()
+            dataprovider.randomSeries();
             areaChart.repaint()
+
+            average = dataprovider.getAverage()
+            areaChart.chartOptions = ({
+                                                          scaleStepWidth: dataprovider.maxValue/10,
+                                                          pointDotRadius: 0,
+
+                                                      })
         }
     }
 
@@ -78,7 +102,7 @@ Pane {
             strokeColor: "#72c4e8"
             pointColor: "#ffffff"
 
-            chartAnimated: true
+            chartAnimated: false
             chartOptions: ({
                 scaleLineWidth: 2,
                 barShowStroke: false,
@@ -92,11 +116,10 @@ Pane {
                                scaleLineColor: "rgba(220,220,220,1)",
                                scaleShowLabels: true,
                                scaleShowGridLines: true,
-
                                //needed to override x-asix
                                //draws 10 lines, incremented by 100
                                scaleSteps : 10,
-                               scaleStepWidth: 100,
+                               scaleStepWidth: dataprovider.maxValue/10,
                                scaleOverride: true,
 
 
@@ -104,6 +127,7 @@ Pane {
             onValuesChanged: {
                 requestPaint()
             }
+
 
         }
 

@@ -55,15 +55,26 @@ Page {
             HorizontalSpacer {
             }
 
-            Button {
-                background: Rectangle {
-                    implicitHeight: 5
-                    implicitWidth: 5
-                    color: "red"
+            Rectangle {
+                    implicitHeight: 25
+                    implicitWidth: 25
+                    color: Literals.transparent
+                    border.color: Literals.borderColor
+                    border.width: Literals.borderWidth
+                    radius: 2
+                    Layout.rightMargin: 12
+
+                    Text {
+                        id: name
+                        text: qsTr( "▲")
+                        anchors.centerIn: parent
+                    }
                 }
-                text: "hello"
+
+
+              //  text: "▲"
             }
-        }
+
         ///////////////////////////////////////////////////////////////////////////////  top row
         ///////////////////////////////////////////////////////////////////////////////  card Content
         RowLayout {
@@ -130,6 +141,13 @@ Page {
                 Layout.fillWidth: true
 
                 GraphItem {
+                    id: graph
+                    onCardnameChanged: cardName.textValue = graph.cardname;
+                    onStatusChanged: status.textValue = "Status : "+graph.status;
+                    onHighChanged: high.textValue = "High : "+graph.high.toString()
+                    onLowChanged: low.textValue = "Low : "+graph.low.toString()
+                    onMeanChanged: mean.textValue = "Mean : "+graph.mean.toString()
+                    onLatestChanged: latest.textValue = "Latest : "+ graph.latest.toString()
                 }
             }
         }

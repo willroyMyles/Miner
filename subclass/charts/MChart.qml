@@ -139,6 +139,8 @@ Chart {
         } else if (chartType === Charts.ChartType.LINE) {
             chartData = prepareLineChartData()
         }
+
+
     }
 
     Component.onCompleted: {
