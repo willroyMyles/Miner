@@ -1,4 +1,3 @@
-import QtCharts 2.2
 import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
@@ -136,25 +135,25 @@ Pane {
         }
 
         ColumnLayout {
-            Rectangle {
-                id: averageBar
-                border.color: Literals.borderColor
-                border.width: Literals.borderWidth
-                implicitWidth: 25
-                Layout.fillHeight: true
-                color: Literals.transparent
-                rotation: 180
+//            Rectangle {
+//                id: averageBar
+//                border.color: Literals.borderColor
+//                border.width: Literals.borderWidth
+//                implicitWidth: 25
+//                Layout.fillHeight: true
+//                color: Literals.transparent
+//                rotation: 180
 
-                Component.onCompleted: {
-                    console.log(dataprovider.getAverage())
-                }
+//                Component.onCompleted: {
+//                    console.log(dataprovider.getAverage())
+//                }
 
-                gradient: Gradient{
-                    GradientStop{position: 0.0; color: Literals.blueButtonColor}
-                    GradientStop{position: average; color: Literals.darkBackgroundColor}
-                    GradientStop{position: average; color: Literals.blueButtonColorPressed}
-                }
-            }
+//                gradient: Gradient{
+//                    GradientStop{position: 0.0; color: Literals.blueButtonColor}
+//                    GradientStop{position: average; color: Literals.darkBackgroundColor}
+//                    GradientStop{position: average; color: Literals.blueButtonColorPressed}
+//                }
+//            }
 
             Label {
                 id: avg

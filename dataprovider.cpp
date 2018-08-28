@@ -41,7 +41,7 @@ DataProvider::DataProvider(QObject *parent) :
         count = i+1;
         if(valueList.at(i)> maxValue_){
             maxValue_ = valueList.at(i);
-            emit maxValueChanged(maxValue_);
+            emit maxValueChanged();
         }
     }
 
@@ -104,7 +104,7 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 
     if(yValue> maxValue_){
         maxValue_ = yValue;
-        emit maxValueChanged(maxValue_);
+        emit maxValueChanged();
     }
 
     valueList.append(yValue);

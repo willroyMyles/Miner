@@ -32,3 +32,11 @@
 *.pro
 
 miner\.pro\.user
+
+\.vs/Miner/v15/
+
+build/\.vs/Miner/v15/Browse\.VC\.opendb
+
+build
+
+.vs*

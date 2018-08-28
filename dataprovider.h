@@ -69,7 +69,7 @@ private:
     QString status = "Inactive";
 
 signals:
-    void maxValueChanged(qreal);
+    void maxValueChanged();
     void cardNameChanged();
     void statusChanged();
     void highChanged();

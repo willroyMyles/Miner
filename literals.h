@@ -12,7 +12,6 @@ class Literals : public QObject{
     Q_PROPERTY(QVariant fontWeightLighter READ fontWeightLighter CONSTANT)
     Q_PROPERTY(QVariant fontWeightLarger READ fontWeightLarger CONSTANT)
     Q_PROPERTY(QVariant borderWidth READ borderWidth CONSTANT)
-
     Q_PROPERTY(QVariant fontcolor READ fontColor CONSTANT)
     Q_PROPERTY(QVariant blueButtonColor READ blueButtonColor CONSTANT)
     Q_PROPERTY(QVariant darkBackgroundColor READ darkBackgroundColor CONSTANT)
@@ -40,14 +39,12 @@ public:
     QVariant transparent(){return   QColor( 0,0,0, 0)  ;}
     QVariant borderColor(){return   QColor( 76,76,76)  ;}
     QVariant borderWidth(){return  2 ;}
-
     QVariant buttonColor(){return   QColor( 76,76,76)  ;}
     QVariant buttonColorHovered(){return   buttonColor().value<QColor>().darker(105)  ;}
     QVariant buttonColorPressed(){return   buttonColor().value<QColor>().darker(250)  ;}
     QVariant blueButtonColor(){return QColor(0,176,229);}
     QVariant blueButtonColorHovered(){return   blueButtonColor().value<QColor>().darker(105) ;}
     QVariant blueButtonColorPressed(){return   blueButtonColor().value<QColor>().darker(250)  ;}
-
     QVariant switchOffColor(){return   QColor(90,90,90) ;}
     QVariant switchOnColor(){return   blueButtonColor().value<QColor>()  ;}
 

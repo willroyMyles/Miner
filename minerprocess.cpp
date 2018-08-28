@@ -21,8 +21,6 @@ For more information see the LICENSE file
 
 #include "minerprocess.h"
 #include "cuda_gpu_list.h"
-#include "minerchart.h"
-
 #ifdef BUILD_AS_LIB
 #include "../../src/constants.h"
 #else
