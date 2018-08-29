@@ -171,14 +171,10 @@ bool MinerManager::initialize()
 	// get nvidia devices
 	auto list = get_cuda_devices();
 
-	// get amd devices
-	list.append(get_amd_devices());
-    for(int i =0 ; i< 2; i++){
-	auto dataprovider = new DataProvider();
-	emit processCreated(dataprovider);
-    }
-	qDebug() << "called";
-	return true;
+    // get amd devices
+    list.append(get_amd_devices());
+
+    return true;
 	// create processes for each
 	int portNum = 9310;
 	int i = 0;
@@ -190,6 +186,7 @@ bool MinerManager::initialize()
 		proc->setNetworkPort(portNum);
 		dataprovider->setMinerProcess(proc);
 		dataprovider->setIndex(i);
+        emit processCreated(dataprovider);
 		processes.append(proc);
 		//providerList.append(dataprovider);
 		portNum += 1;
