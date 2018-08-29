@@ -26,7 +26,7 @@ For more information see the LICENSE file
 #else
 #include "constants.h"
 #endif
-
+#include "dataprovider.h"
 
 float RandomFloat(float a, float b) {
 	float random = ((float)rand()) / (float)RAND_MAX;
@@ -153,6 +153,19 @@ QList<GPU> get_cuda_devices() {
 	return ret;
 }
 */
+MinerManager::MinerManager( QObject *parent) :QObject(parent){
+}
+
+Q_INVOKABLE QVector<int> MinerManager::providerlist()
+{
+	return somenumber;
+}
+
+Q_INVOKABLE QQmlListProperty<DataProvider*> MinerManager::dataHolderLists()
+{
+	return providerList;
+}
+
 bool MinerManager::initialize()
 {
 	// get nvidia devices
@@ -161,13 +174,21 @@ bool MinerManager::initialize()
 	// get amd devices
 	list.append(get_amd_devices());
 
+	qDebug() << "called";
+	return true;
 	// create processes for each
 	int portNum = 9310;
+	int i = 0;
 	for (auto gpu : list) {
 		auto proc = new MinerProcess(this);
+		auto dataprovider = new DataProvider();
+		i++;
 		proc->setGpu(gpu);
 		proc->setNetworkPort(portNum);
+		dataprovider->setMinerProcess(proc);
+		dataprovider->setIndex(i);
 		processes.append(proc);
+		//providerList.append(dataprovider);
 		portNum += 1;
 	}
 

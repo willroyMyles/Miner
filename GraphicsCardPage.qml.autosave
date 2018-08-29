@@ -19,8 +19,7 @@ Page {
         Component.onCompleted: {
             manager.initialize();
             console.log(manager.providerlist().length)
-            console.log(manager.dataHolderLists().length)
-            //uncomment minermanger initialize function
+            console.log(manager.dataHolderLists().length)+99999999999999999996er initialize function
         }
     }
 

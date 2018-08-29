@@ -10,7 +10,7 @@ Label {
     TextMetrics{
         id: textMetrics
         font.weight: Literals.fontWeight
-         font.pixelSize: Qt.application.font.pixelSize * 1.2
+         font.pointSize: Qt.application.font.pixelSize * 1.2
     }
 
     id: latest

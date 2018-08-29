@@ -50,14 +50,14 @@ Rectangle {
     RowLayout {
         anchors.fill: parent
 
-        Rectangle {
-            Layout.fillHeight: true
-            implicitWidth: 1
-            implicitHeight: parent.height
-            border.color: Literals.borderColor
-            anchors.left: parent.left
-            color: Literals.borderColor
-        }
+//        Rectangle {
+//            Layout.fillHeight: true
+//            implicitWidth: 1
+//            implicitHeight: parent.height
+//            border.color: Literals.borderColor
+//            anchors.left: parent.left
+//            color: Literals.borderColor
+//        }
 
         CustomBorder{
             commonBorder: false
@@ -70,7 +70,8 @@ Rectangle {
             source: "../" + imageSource
             sourceSize.width: 20
         }
-        Text {
+        Label {
+            id: textval
             text: textValue
             color: Literals.fontcolor
             font.weight: Literals.fontWeight

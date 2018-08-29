@@ -1,25 +1,4 @@
-/*******************************************************************************
-Copyright (C) 2017 Milo Solutions
-Contact: https://www.milosolutions.com
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*******************************************************************************/
 
 
 #include "dataprovider.h"
@@ -97,8 +76,8 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
     emit lowChanged();
 
     if(valueList.length() > 25){
-   valueList.takeFirst();
-    labelList.takeFirst();
+		valueList.takeFirst();
+		labelList.takeFirst();
     }
 
 
@@ -110,7 +89,12 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
     valueList.append(yValue);
     labelList.append("");
 
+	summation += yValue;
+	count++;
+	mean = summation / count;
+
     latest = yValue;
+	emit meanChanged();
     emit latestChanged();
     emit dataAdded();
 
@@ -122,6 +106,71 @@ void DataProvider::randomSeries()
 
     auto value = qreal(qrand()%100);
     addToSeries(value);
+
+}
+
+void DataProvider::setIndex(int dex)
+{
+	index = dex;
+}
+
+void DataProvider::setMinerProcess(MinerProcess *process)
+{
+	this->process = process;
+
+	if (process != nullptr) {
+		connect(process, &MinerProcess::onMinerChartData, [this](MinerChartData data)
+		{
+			// set last hash to ui
+			//this->setSpeed(data.hps);
+			addToSeries(data.hps);
+
+			// if hps is 0 then it must be connecting
+			// set pool color to orange
+			if (data.connected)
+				//this->setMinerStatus(MinerConnection::Connected);
+				this->status = "Connected";
+			else
+				//this->setMinerStatus(MinerConnection::Connecting);
+				this->status = "Connecting";
+
+
+		/*	if (data.hps != 0) {
+				if (this->info->data.size() > 100)
+					this->info->data.removeFirst();
+				this->info->data.append(data);
+				this->info->repaint();
+			}*/
+		});
+
+		connect(process, &MinerProcess::minerStatusChanged, [this](MinerStatus status)
+		{
+			switch (status)
+			{
+			case MinerStatus::Idle:
+				/*this->setMinerStatus(MinerConnection::Inactive);
+				displayLabel->setText("Inactive");*/
+				this->status = "Inactive";
+				break;
+			case MinerStatus::Starting:
+				/*this->setMinerStatus(MinerConnection::Connecting);
+				displayLabel->setText("Connecting");*/
+				this->status = "Connecting";
+				break;
+			case MinerStatus::Mining:
+				/*this->setMinerStatus(MinerConnection::Connected);
+				displayLabel->setText("Connected");*/
+				this->status = "Connected";
+				break;
+			case MinerStatus::Stopping:
+				/*this->setMinerStatus(MinerConnection::Notconnected);
+				displayLabel->setText("Not Connected");*/
+				this->status = "Not Connected";
+
+				break;
+			}
+		});
+	}
 
 }
 
@@ -137,6 +186,8 @@ qreal DataProvider::getLow() const
 
 qreal DataProvider::getMean() const
 {
+	qSetRealNumberPrecision(2);
+	
     return mean;
 }
 
@@ -153,4 +204,9 @@ QString DataProvider::getCardName() const
 QString DataProvider::getStatus() const
 {
     return status;
+}
+
+Q_INVOKABLE DataProvider * DataProvider::getProvide()
+{
+	return this;
 }

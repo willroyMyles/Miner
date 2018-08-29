@@ -53,10 +53,16 @@ struct GPU
 class MinerSettings;
 class MinerProcess;
 class QTimer;
+class DataProvider;
 
-class MinerManager
+class MinerManager : public QObject
 {
+	Q_OBJECT
+		Q_PROPERTY(QVector<int> list READ providerlist CONSTANT)
+		Q_PROPERTY(QQmlListProperty<DataProvider*> dataHolderLists READ dataHolderLists CONSTANT)
 public:
+
+	explicit MinerManager(QObject *parent = Q_NULLPTR);
 	QString poolUrl = "165.227.72.177:3333";
 	QString identifier = "x";
 	QString password = "jahminer";
@@ -67,7 +73,12 @@ public:
 
 	// initializes a MinerProcess for each miner
 	// returns false is there is any error
-	bool initialize();
+	QQmlListProperty<DataProvider*> providerList;
+	QVector<int> somenumber = { 1,2,3,4,5 };
+
+	Q_INVOKABLE QVector<int> providerlist();
+	Q_INVOKABLE QQmlListProperty<DataProvider*> dataHolderLists();
+	Q_INVOKABLE bool initialize();
 };
 
 class MinerChart;

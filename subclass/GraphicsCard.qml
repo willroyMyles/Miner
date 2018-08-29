@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
+import DataProvider 1.0
 
 Page {
     property alias cardName: cardName.text
@@ -11,6 +12,9 @@ Page {
     property alias low: low.text
     property alias mean: mean.text
     property alias latest: latest.text
+    property int cardIndex: 0
+
+    property DataProvider provider: null
 
 
 
@@ -46,7 +50,7 @@ Page {
 
             Text {
                 id: minerIndex
-                text: "Miner index"
+                text: "Miner "+ cardIndex
                 font.pixelSize: Qt.application.font.pixelSize * 1.5
                 color: Literals.fontcolor
 
@@ -142,6 +146,7 @@ Page {
 
                 GraphItem {
                     id: graph
+                    myIndex: cardIndex
                     onCardnameChanged: cardName.textValue = graph.cardname;
                     onStatusChanged: status.textValue = "Status : "+graph.status;
                     onHighChanged: high.textValue = "High : "+graph.high.toString()

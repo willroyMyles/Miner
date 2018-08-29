@@ -10,26 +10,30 @@ import "charts"
 import "charts/Chart.js" as Charts
 
 Pane {
-    property string accentColor: "#21a2ff"
-    property string primaryColor: "#253856"
-    property double average: dataprovider.getAverage()
+    property int myIndex: 0
 
+    //property QtObject dataprovder: 0
+
+    property real average: dataprovider.getAverage()
     property string cardname: dataprovider.getCardName()
     property string status: dataprovider.getStatus()
     property real high: dataprovider.getHigh()
     property real low: dataprovider.getLow()
-    property real mean: dataprovider.getMean()
+    property double mean: dataprovider.getMean()
     property real latest: dataprovider.getLatest()
 
     DataProvider{
         id:dataprovider
+        Component.onCompleted: {
+            //dataprovider = dataprovider.getProvide();
+        }
 
         onMaxValueChanged: {  high = dataprovider.getHigh()    }
         onCardNameChanged: {  cardname = dataprovider.getCardName()  }
         onLatestChanged: { latest = dataprovider.getLatest() }
         onLowChanged: {low = dataprovider.getLow()}
         onStatusChanged: {status = dataprovider.getStatus() }
-
+        onMeanChanged: {mean = dataprovider.getMean()}
         onDataAdded: {
             areaChart.labels= dataprovider.getLabels()
             areaChart.values= dataprovider.getValues()
@@ -135,30 +139,37 @@ Pane {
         }
 
         ColumnLayout {
-//            Rectangle {
-//                id: averageBar
-//                border.color: Literals.borderColor
-//                border.width: Literals.borderWidth
-//                implicitWidth: 25
-//                Layout.fillHeight: true
-//                color: Literals.transparent
-//                rotation: 180
+            Rectangle {
+                id: averageBar
+                border.color: Literals.borderColor
+                border.width: Literals.borderWidth
+                implicitWidth: 25
+                Layout.fillHeight: true
+                color: Literals.transparent
+                rotation: 180
 
-//                Component.onCompleted: {
-//                    console.log(dataprovider.getAverage())
-//                }
+                Component.onCompleted: {
+                    console.log(dataprovider.getAverage())
+                }
 
-//                gradient: Gradient{
-//                    GradientStop{position: 0.0; color: Literals.blueButtonColor}
-//                    GradientStop{position: average; color: Literals.darkBackgroundColor}
-//                    GradientStop{position: average; color: Literals.blueButtonColorPressed}
-//                }
-//            }
+                gradient: Gradient{
+                    //commented gradients throws errors
+                    GradientStop{position: 0.0; color: Literals.blueButtonColor}
+                //    GradientStop{position: average; color: Literals.darkBackgroundColor}
+                //    GradientStop{position: average; color: Literals.blueButtonColorPressed}
+                }
+            }
 
             Label {
                 id: avg
                 text: "Avg"
                 color: Literals.fontcolor
+                horizontalAlignment: Text.horizontalCenter
+                Layout.preferredWidth: 25
+               // Layout.alignment: Text.horizontalCenter
+                background: Rectangle{
+                    color: "red"
+                }
             }
         }
     }

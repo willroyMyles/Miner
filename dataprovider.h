@@ -25,6 +25,7 @@ SOFTWARE.
 #ifndef DATAPROVIDER_H
 #define DATAPROVIDER_H
 
+#include "minerprocess.h"
 #include <QObject>
 
 class DataProvider : public QObject
@@ -48,10 +49,16 @@ public:
     Q_INVOKABLE QString getCardName() const;
     Q_INVOKABLE QString getStatus() const;
 
+	Q_INVOKABLE DataProvider* getProvide();
+
 
     Q_INVOKABLE void randomSeries();
 
     qreal maxValue(){return maxValue_;}
+
+
+	void setIndex(int dex);
+	void setMinerProcess(MinerProcess *process);
 
 
 private:
@@ -60,6 +67,7 @@ private:
     qreal summation;
     qreal count;
     qreal maxValue_ = 0;
+	MinerProcess* process;
 
     qreal high = 10.0;
     qreal low = 0.0;
@@ -67,6 +75,7 @@ private:
     qreal latest = 0.0;
     QString cardName = "gfore 10-22";
     QString status = "Inactive";
+	int index;
 
 signals:
     void maxValueChanged();
