@@ -161,10 +161,10 @@ Q_INVOKABLE QVector<int> MinerManager::providerlist()
 	return somenumber;
 }
 
-Q_INVOKABLE QQmlListProperty<DataProvider*> MinerManager::dataHolderLists()
-{
-	return providerList;
-}
+//Q_INVOKABLE QQmlListProperty<DataProvider*> MinerManager::dataHolderLists()
+//{
+//	return providerList;
+//}
 
 bool MinerManager::initialize()
 {
@@ -173,7 +173,10 @@ bool MinerManager::initialize()
 
 	// get amd devices
 	list.append(get_amd_devices());
-
+    for(int i =0 ; i< 2; i++){
+	auto dataprovider = new DataProvider();
+	emit processCreated(dataprovider);
+    }
 	qDebug() << "called";
 	return true;
 	// create processes for each

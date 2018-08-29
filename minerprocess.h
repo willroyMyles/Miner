@@ -59,7 +59,7 @@ class MinerManager : public QObject
 {
 	Q_OBJECT
 		Q_PROPERTY(QVector<int> list READ providerlist CONSTANT)
-		Q_PROPERTY(QQmlListProperty<DataProvider*> dataHolderLists READ dataHolderLists CONSTANT)
+
 public:
 
 	explicit MinerManager(QObject *parent = Q_NULLPTR);
@@ -73,12 +73,17 @@ public:
 
 	// initializes a MinerProcess for each miner
 	// returns false is there is any error
-	QQmlListProperty<DataProvider*> providerList;
+
 	QVector<int> somenumber = { 1,2,3,4,5 };
 
 	Q_INVOKABLE QVector<int> providerlist();
-	Q_INVOKABLE QQmlListProperty<DataProvider*> dataHolderLists();
+	Q_INVOKABLE QVector<DataProvider*> dataProviderList;
+
 	Q_INVOKABLE bool initialize();
+
+signals:
+	void processCreated(DataProvider *provider);
+
 };
 
 class MinerChart;

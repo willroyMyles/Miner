@@ -10,17 +10,15 @@ import DataProvider 1.0
 
 Page {
 
-    DataProvider{
-        id: listtttt
-    }
-
     MinerManager{
         id: manager
         Component.onCompleted: {
             manager.initialize();
-            console.log(manager.providerlist().length)
-            console.log(manager.dataHolderLists().length)
-            //uncomment minermanger initialize function
+        }
+
+        onProcessCreated: {
+            console.log(provider)
+            addGraphicsCard(provider);
         }
     }
 
@@ -77,28 +75,6 @@ Page {
                 spacing:5
                 width: scrollview.width- scrollview.padding * 2
 
-                Component.onCompleted: {
-                    var comp;
-                    var card;
-
-                    //create cards and pass info
-                    comp = Qt.createComponent("subclass/GraphicsCard.qml")
-
-                    if (comp.status == Component.Ready)
-                        card = comp.createObject(col,{"cardName" : "createdCard", "cardIndex":1})
-                    else
-                        comp.statusChanged.connect( card = comp.createObject(col,{"cardName" : "createdCard"}));
-                       console.log(manager.providerlist())
-
-                    for(var i =0; i < manager.providerList.length(); i++ ){
-
-                    }
-
-
-                }
-
-
-
                 // Layout.fillWidth: true
 //                GraphicsCard {
 //                    id: card1
@@ -111,5 +87,20 @@ Page {
 //                }
             }
         }
+
+        function addGraphicsCard(provider){
+            var comp;
+            var card;
+
+            //create cards and pass info
+            comp = Qt.createComponent("subclass/GraphicsCard.qml")
+
+            if (comp.status == Component.Ready)
+                card = comp.createObject(col,{"cardName" : "createdCard", "cardIndex":1, "provider" : provider })
+            else
+                comp.statusChanged.connect( card = comp.createObject(col,{"cardName" : "createdCard"}));
+
+        }
+
 
 }

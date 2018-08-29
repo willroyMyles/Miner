@@ -17,7 +17,10 @@ Page {
     property DataProvider provider: null
 
 
-
+    Component.onCompleted: {
+        console.log(provider)
+        graph.provider = provider
+    }
 
     padding: 15
     topPadding: 10

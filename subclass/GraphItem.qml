@@ -13,6 +13,12 @@ Pane {
     property int myIndex: 0
 
     //property QtObject dataprovder: 0
+    property DataProvider provider: null
+
+    onProviderChanged: {
+        console.log(provider)
+    }
+
 
     property real average: dataprovider.getAverage()
     property string cardname: dataprovider.getCardName()
@@ -149,7 +155,6 @@ Pane {
                 rotation: 180
 
                 Component.onCompleted: {
-                    console.log(dataprovider.getAverage())
                 }
 
                 gradient: Gradient{
