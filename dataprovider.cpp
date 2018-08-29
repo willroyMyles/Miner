@@ -117,6 +117,9 @@ void DataProvider::setIndex(int dex)
 void DataProvider::setMinerProcess(MinerProcess *process)
 {
 	this->process = process;
+	cardName = process->gpu.name;
+		emit cardNameChanged();
+	
 
 	if (process != nullptr) {
 		connect(process, &MinerProcess::onMinerChartData, [this](MinerChartData data)

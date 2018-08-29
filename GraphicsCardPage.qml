@@ -96,7 +96,7 @@ Page {
             comp = Qt.createComponent("subclass/GraphicsCard.qml")
 
             if (comp.status == Component.Ready)
-                card = comp.createObject(col,{"cardName" : "createdCard", "cardIndex":1, "provider" : provider })
+                card = comp.createObject(col,{"cardIndex":1, "provider" : provider })
             else
                 comp.statusChanged.connect( card = comp.createObject(col,{"cardName" : "createdCard"}));
 

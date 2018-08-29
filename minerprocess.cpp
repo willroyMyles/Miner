@@ -174,7 +174,6 @@ bool MinerManager::initialize()
     // get amd devices
     list.append(get_amd_devices());
 
-    return true;
 	// create processes for each
 	int portNum = 9310;
 	int i = 0;

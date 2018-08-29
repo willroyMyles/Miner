@@ -21,7 +21,7 @@ Pane {
 
 
     property real average: dataprovider.getAverage()
-    property string cardname: dataprovider.getCardName()
+    property string cardname: provider.getCardName()
     property string status: dataprovider.getStatus()
     property real high: dataprovider.getHigh()
     property real low: dataprovider.getLow()
@@ -35,7 +35,7 @@ Pane {
         }
 
         onMaxValueChanged: {  high = dataprovider.getHigh()    }
-        onCardNameChanged: {  cardname = dataprovider.getCardName()  }
+        onCardNameChanged: {  cardname = provider.getCardName()  }
         onLatestChanged: { latest = dataprovider.getLatest() }
         onLowChanged: {low = dataprovider.getLow()}
         onStatusChanged: {status = dataprovider.getStatus() }
