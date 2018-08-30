@@ -42,7 +42,8 @@ ApplicationWindow {
                 textValue: "Charts"
                 imageSource: "images/chart-40.png"
                 onClicked: {
-                    console.log(textValue)
+                    console.log("textValue")
+                    swipe.setCurrentIndex(0)
                 }
             }
             ToolBarButton {
@@ -50,7 +51,7 @@ ApplicationWindow {
                 textValue: "Pool"
                 imageSource: "images/settings-40.png"
                 onClicked: {
-
+                    swipe.setCurrentIndex(1)
                 }
             }
 
@@ -69,6 +70,8 @@ ApplicationWindow {
         anchors.fill: parent
         spacing: 0
         SwipeView {
+
+            id : swipe
             Layout.fillHeight: true
             Layout.fillWidth: true
 
@@ -77,9 +80,14 @@ ApplicationWindow {
                 border.width: Literals.borderWidth
                 color: Literals.transparent
             }
-            currentIndex: 1
+            currentIndex: 0
 
             GraphicsCardPage{
+                id : graph_page
+            }
+
+            SettingsPage{
+                id: settings_page
             }
 
         }
