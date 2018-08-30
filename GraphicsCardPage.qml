@@ -10,6 +10,13 @@ import DataProvider 1.0
 
 Page {
 
+    property bool startMining : false
+
+
+    onStartMiningChanged: {
+        manager.startMining()
+    }
+
     MinerManager{
         id: manager
         Component.onCompleted: {
@@ -96,7 +103,7 @@ Page {
             comp = Qt.createComponent("subclass/GraphicsCard.qml")
 
             if (comp.status == Component.Ready)
-                card = comp.createObject(col,{"cardIndex":1, "provider" : provider })
+                card = comp.createObject(col,{"cardIndex":provider.getIndex(), "provider" : provider })
             else
                 comp.statusChanged.connect( card = comp.createObject(col,{"cardName" : "createdCard"}));
 

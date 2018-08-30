@@ -166,6 +166,11 @@ Q_INVOKABLE QVector<int> MinerManager::providerlist()
 //	return providerList;
 //}
 
+Q_INVOKABLE void MinerManager::startMining()
+{
+	return Q_INVOKABLE void();
+}
+
 bool MinerManager::initialize()
 {
 	// get nvidia devices
@@ -187,7 +192,7 @@ bool MinerManager::initialize()
 		dataprovider->setIndex(i);
         emit processCreated(dataprovider);
 		processes.append(proc);
-		//providerList.append(dataprovider);
+		dataProviderList.append(dataprovider);
 		portNum += 1;
 	}
 
