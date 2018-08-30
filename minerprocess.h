@@ -78,7 +78,7 @@ public:
 
 	Q_INVOKABLE QVector<int> providerlist();
 	Q_INVOKABLE QVector<DataProvider*> dataProviderList;
-
+	Q_INVOKABLE void startMining();
 	Q_INVOKABLE bool initialize();
 
 signals:

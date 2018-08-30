@@ -33,6 +33,7 @@ class DataProvider : public QObject
     Q_OBJECT
 
     Q_PROPERTY(qreal maxValue READ maxValue NOTIFY maxValueChanged)
+		//Q_PROPERTY(bool armed READ armed WRITE setArmed NOTIFY armedChanged)
 public:
     explicit DataProvider(QObject *parent = Q_NULLPTR);
 
@@ -48,11 +49,12 @@ public:
     Q_INVOKABLE qreal getLatest() const;
     Q_INVOKABLE QString getCardName() const;
     Q_INVOKABLE QString getStatus() const;
-
+	Q_INVOKABLE int getIndex();
 	Q_INVOKABLE DataProvider* getProvide();
-
-
     Q_INVOKABLE void randomSeries();
+
+	Q_INVOKABLE bool armed();
+	Q_INVOKABLE void setArmed(bool value);
 
     qreal maxValue(){return maxValue_;}
 
@@ -70,22 +72,24 @@ private:
 	MinerProcess* process;
 
     qreal high = 10.0;
-    qreal low = 0.0;
+    qreal low = NULL;
     qreal mean = 0.5;
     qreal latest = 0.0;
     QString cardName = "gfore 10-22";
     QString status = "Inactive";
 	int index;
-
+	bool armed_ = false;
+	bool first_run = true;
 signals:
-    void maxValueChanged();
-    void cardNameChanged();
-    void statusChanged();
-    void highChanged();
-    void lowChanged();
-    void meanChanged();
-    void latestChanged();
+    void maxValueChanged(qreal value);
+    void cardNameChanged(QString value);
+    void statusChanged(QString value);
+    void highChanged(qreal value);
+    void lowChanged(qreal value);
+    void meanChanged(qreal value);
+    void latestChanged(qreal value);
     void dataAdded();
+	void armedChanged(bool value);
 
 
 };

@@ -15,14 +15,14 @@ DataProvider::DataProvider(QObject *parent) :
     valueList.append( 0.0);
     labelList.append("");
 
-    for(int i =0; i < valueList.size();i++){
-        summation += valueList.at(i);
-        count = i+1;
-        if(valueList.at(i)> maxValue_){
-            maxValue_ = valueList.at(i);
-            emit maxValueChanged();
-        }
-    }
+    //for(int i =0; i < valueList.size();i++){
+    //    summation += valueList.at(i);
+    //    count = i+1;
+    //    if(valueList.at(i)> maxValue_){
+    //        maxValue_ = valueList.at(i);
+    //        emit maxValueChanged();
+    //    }
+    //}
 
 }
 
@@ -70,10 +70,17 @@ qreal DataProvider::getAverage()
 
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
+	if (first_run) {
+		qDebug() << low;
+		low = yValue;
+		emit lowChanged(low);
+		first_run = false;
+	}
 
-    if(low == 0.0) low = yValue;
-    if(low > yValue) low = yValue;
-    emit lowChanged();
+	if (low > yValue) {
+		low = yValue;
+		emit lowChanged(low);
+	}
 
     if(valueList.length() > 25){
 		valueList.takeFirst();
@@ -83,7 +90,7 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 
     if(yValue> maxValue_){
         maxValue_ = yValue;
-        emit maxValueChanged();
+        emit maxValueChanged(maxValue_);
     }
 
     valueList.append(yValue);
@@ -94,8 +101,8 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 	mean = summation / count;
 
     latest = yValue;
-	emit meanChanged();
-    emit latestChanged();
+	emit meanChanged(mean);
+    emit latestChanged(latest);
     emit dataAdded();
 
 
@@ -109,6 +116,16 @@ void DataProvider::randomSeries()
 
 }
 
+bool DataProvider::armed()
+{
+	return armed_;
+}
+
+Q_INVOKABLE void DataProvider::setArmed(bool value)
+{
+	armed_ = value;
+}
+
 void DataProvider::setIndex(int dex)
 {
 	index = dex;
@@ -118,7 +135,7 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 {
 	this->process = process;
 	cardName = process->gpu.name;
-		emit cardNameChanged();
+		emit cardNameChanged(cardName);
 	
 
 	if (process != nullptr) {
@@ -136,6 +153,8 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 			else
 				//this->setMinerStatus(MinerConnection::Connecting);
 				this->status = "Connecting";
+
+			emit statusChanged(this->status);
 
 
 		/*	if (data.hps != 0) {
@@ -172,6 +191,8 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 
 				break;
 			}
+			emit statusChanged(this->status);
+
 		});
 	}
 
@@ -207,6 +228,11 @@ QString DataProvider::getCardName() const
 QString DataProvider::getStatus() const
 {
     return status;
+}
+
+Q_INVOKABLE int DataProvider::getIndex()
+{
+	return index;
 }
 
 Q_INVOKABLE DataProvider * DataProvider::getProvide()

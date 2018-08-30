@@ -48,7 +48,7 @@ Page {
             }
 
            CustomSwitch{
-
+                id: armedSwitch
            }
 
             Text {
@@ -156,6 +156,7 @@ Page {
                     onLowChanged: low.textValue = "Low : "+graph.low.toString()
                     onMeanChanged: mean.textValue = "Mean : "+graph.mean.toString()
                     onLatestChanged: latest.textValue = "Latest : "+ graph.latest.toString()
+                    onArmedChanged: graph.armed == true? armedSwitch.checked = true : armedSwitch.checked = false;
                 }
             }
         }

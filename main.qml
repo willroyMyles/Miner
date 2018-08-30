@@ -80,6 +80,7 @@ ApplicationWindow {
             currentIndex: 1
 
             GraphicsCardPage{
+                id: graphicsCardPage
             }
 
         }

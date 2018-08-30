@@ -20,32 +20,29 @@ Pane {
     }
 
 
-    property real average: dataprovider.getAverage()
+    property real average: provider.getAverage()
     property string cardname: provider.getCardName()
-    property string status: dataprovider.getStatus()
-    property real high: dataprovider.getHigh()
-    property real low: dataprovider.getLow()
-    property double mean: dataprovider.getMean()
-    property real latest: dataprovider.getLatest()
+    property string status: provider.getStatus()
+    property real high: provider.getHigh()
+    property real low: provider.getLow()
+    property double mean: provider.getMean()
+    property real latest: provider.getLatest()
+    property bool armed: provider.armed();
 
-    DataProvider{
-        id:dataprovider
-        Component.onCompleted: {
-            //dataprovider = dataprovider.getProvide();
-        }
 
-        onMaxValueChanged: {  high = dataprovider.getHigh()    }
-        onCardNameChanged: {  cardname = provider.getCardName()  }
-        onLatestChanged: { latest = dataprovider.getLatest() }
-        onLowChanged: {low = dataprovider.getLow()}
-        onStatusChanged: {status = dataprovider.getStatus() }
-        onMeanChanged: {mean = dataprovider.getMean()}
+    Connections{
+        target : provider
+        onMaxValueChanged: {  high = value   }
+        onCardNameChanged: {  cardname = value }
+        onLatestChanged: { latest = value }
+        onLowChanged: {low = value}
+        onStatusChanged: {status = value }
+        onMeanChanged: {mean = value}
         onDataAdded: {
-            areaChart.labels= dataprovider.getLabels()
-            areaChart.values= dataprovider.getValues()
+            areaChart.labels= provider.getLabels()
+            areaChart.values= provider.getValues()
         }
-
-
+        onArmedChanged:{ armed = value}
     }
 
 
@@ -62,12 +59,12 @@ Pane {
         id: area
 
         onClicked: {
-            dataprovider.randomSeries();
+            provider.randomSeries();
             areaChart.repaint()
 
-            average = dataprovider.getAverage()
+            average = provider.getAverage()
             areaChart.chartOptions = ({
-                                                          scaleStepWidth: dataprovider.maxValue/10,
+                                                          scaleStepWidth: provider.maxValue/10,
                                                           pointDotRadius: 0,
 
                                                       })
@@ -106,8 +103,8 @@ Pane {
             chartType: Charts.ChartType.LINE
 
             //fillColor: Literals.chartBackgroundColor
-            labels: dataprovider.getLabels()
-            values: dataprovider.getValues()
+            labels: provider.getLabels()
+            values: provider.getValues()
             strokeColor: "#72c4e8"
             pointColor: "#ffffff"
 
@@ -128,7 +125,7 @@ Pane {
                                //needed to override x-asix
                                //draws 10 lines, incremented by 100
                                scaleSteps : 10,
-                               scaleStepWidth: dataprovider.maxValue/10,
+                               scaleStepWidth: provider.maxValue/10,
                                scaleOverride: true,
 
 
