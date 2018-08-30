@@ -102,7 +102,7 @@ Pane {
             Layout.fillHeight: true
             chartType: Charts.ChartType.LINE
 
-            //fillColor: Literals.chartBackgroundColor
+            fillColor: Literals.chartBackgroundColor
             labels: provider.getLabels()
             values: provider.getValues()
             strokeColor: "#72c4e8"
@@ -115,7 +115,7 @@ Pane {
                 scaleFontSize: 10,
                 scaleFontFamily: "sans-serif",
                 barValueSpacing: 10,
-                scaleFontColor: "#444444",
+                scaleFontColor: "#00444444",
                 pointDotRadius: 0,
                 bezierCurve: false,
                                scaleGridLineColor: "rgba(220,220,220,1)",
@@ -124,8 +124,8 @@ Pane {
                                scaleShowGridLines: true,
                                //needed to override x-asix
                                //draws 10 lines, incremented by 100
-                               scaleSteps : 10,
-                               scaleStepWidth: provider.maxValue/10,
+                               scaleSteps : 5,
+                               scaleStepWidth: provider.maxValue/5,
                                scaleOverride: true,
 
 

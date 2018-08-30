@@ -9,7 +9,7 @@ and/or modify it under the terms of the GPLv3 License
 For more information see the LICENSE file
 *************************************************************************/
 
-#include <Opencl/cl.h>
+#include <Cl/cl.h>
 #include <QTimer>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -168,7 +168,16 @@ Q_INVOKABLE QVector<int> MinerManager::providerlist()
 
 Q_INVOKABLE void MinerManager::startMining()
 {
-	return Q_INVOKABLE void();
+	for (auto card : dataProviderList) {
+		card->startProcess();
+	}
+}
+
+Q_INVOKABLE void MinerManager::stopMining()
+{
+	for (auto card : dataProviderList) {
+		card->stopProcess();
+	}
 }
 
 bool MinerManager::initialize()
@@ -210,7 +219,7 @@ void MinerProcess::startMining()
 {
 	QDir basePath = QDir(QCoreApplication::applicationDirPath());
 	auto xmrPath = QDir::cleanPath(basePath.absolutePath() + QDir::separator() + "xmr-stak/xmr-stak.exe");
-
+	qDebug() << "start xmrstack called";
 	process = new QProcess();
 	QStringList args;
 	/*
@@ -305,7 +314,7 @@ void MinerProcess::startMining()
 				auto hashArray = hashObj["total"].toArray();
 				auto hps = (float)hashArray[0].toDouble(0);
 
-				// emit status changed
+				// emit status changed    
 				emit onMinerChartData({ poolConnected,uptime, hps });
 			}
 		}, [this](QNetworkReply::NetworkError error)

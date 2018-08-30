@@ -108,6 +108,10 @@ ApplicationWindow {
                 BlueButton {
                     id: startBtn
                     textValue: "Start"
+                    onClicked: {
+                        graph_page.startMining = true
+                        console.log("start button clicked")
+                    }
                 }
                 Label {
                     Layout.fillWidth: true

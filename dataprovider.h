@@ -61,7 +61,8 @@ public:
 
 	void setIndex(int dex);
 	void setMinerProcess(MinerProcess *process);
-
+	Q_INVOKABLE void startProcess();
+	Q_INVOKABLE void stopProcess();
 
 private:
     QList<qreal> valueList;// y-axis
@@ -80,6 +81,10 @@ private:
 	int index;
 	bool armed_ = false;
 	bool first_run = true;
+
+	
+	friend class MinerProcess;
+
 signals:
     void maxValueChanged(qreal value);
     void cardNameChanged(QString value);
@@ -90,6 +95,8 @@ signals:
     void latestChanged(qreal value);
     void dataAdded();
 	void armedChanged(bool value);
+	void miningStarted();
+	void miningStopped();
 
 
 };

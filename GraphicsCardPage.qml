@@ -14,7 +14,10 @@ Page {
 
 
     onStartMiningChanged: {
-        manager.startMining()
+        if(startMining)  manager.startMining()
+        else manager.stopMining();
+
+
     }
 
     MinerManager{

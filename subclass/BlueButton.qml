@@ -32,7 +32,7 @@ Rectangle {
          btn.color = Literals.blueButtonColor
      }
         onClicked: {
-            btn.clicked
+            btn.clicked()
         }
     }
 

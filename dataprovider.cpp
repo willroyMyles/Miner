@@ -15,15 +15,6 @@ DataProvider::DataProvider(QObject *parent) :
     valueList.append( 0.0);
     labelList.append("");
 
-    //for(int i =0; i < valueList.size();i++){
-    //    summation += valueList.at(i);
-    //    count = i+1;
-    //    if(valueList.at(i)> maxValue_){
-    //        maxValue_ = valueList.at(i);
-    //        emit maxValueChanged();
-    //    }
-    //}
-
 }
 
 /*!
@@ -70,6 +61,9 @@ qreal DataProvider::getAverage()
 
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
+
+	qDebug() << yValue;
+
 	if (first_run) {
 		qDebug() << low;
 		low = yValue;
@@ -131,6 +125,23 @@ void DataProvider::setIndex(int dex)
 	index = dex;
 }
 
+Q_INVOKABLE void DataProvider::startProcess()
+{
+
+	if (armed()) {
+		this->process->startMining();
+		//emit this->miningStarted();
+	}
+}
+
+Q_INVOKABLE void DataProvider::stopProcess()
+{
+	if (this->process->isMining()) {
+		this->process->stopMining();
+		//emit this->miningStopped();
+	}
+}
+
 void DataProvider::setMinerProcess(MinerProcess *process)
 {
 	this->process = process;
@@ -155,6 +166,9 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 				this->status = "Connecting";
 
 			emit statusChanged(this->status);
+
+			this->addToSeries(data.hps);
+			
 
 
 		/*	if (data.hps != 0) {

@@ -49,13 +49,17 @@ Page {
 
            CustomSwitch{
                 id: armedSwitch
+                onClicked: {
+                    provider.setArmed(on)
+                }
            }
 
             Text {
                 id: minerIndex
                 text: "Miner "+ cardIndex
-                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                font.pixelSize: Qt.application.font.pixelSize * 1.9
                 color: Literals.fontcolor
+               // font.weight: 65
 
             }
 

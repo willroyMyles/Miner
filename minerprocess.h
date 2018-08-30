@@ -54,7 +54,6 @@ class MinerSettings;
 class MinerProcess;
 class QTimer;
 class DataProvider;
-
 class MinerManager : public QObject
 {
 	Q_OBJECT
@@ -79,7 +78,9 @@ public:
 	Q_INVOKABLE QVector<int> providerlist();
 	Q_INVOKABLE QVector<DataProvider*> dataProviderList;
 	Q_INVOKABLE void startMining();
+	Q_INVOKABLE void stopMining();
 	Q_INVOKABLE bool initialize();
+
 
 signals:
 	void processCreated(DataProvider *provider);
