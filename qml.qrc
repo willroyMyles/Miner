@@ -20,5 +20,7 @@
         <file>subclass/charts/MChart.qml</file>
         <file>subclass/CustomBorder.qml</file>
         <file>subclass/CustomSwitch.qml</file>
+        <file>SettingsPage.qml</file>
+        <file>subclass/SettingsNode.qml</file>
     </qresource>
 </RCC>

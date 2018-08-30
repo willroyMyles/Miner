@@ -40,3 +40,7 @@ build/\.vs/Miner/v15/Browse\.VC\.opendb
 build
 
 .vs*
+
+CMakeLists\.txt\.user\.e3a3a1c
+
+CMakeLists\.txt\.user

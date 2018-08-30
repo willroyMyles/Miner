@@ -42,7 +42,7 @@ Rectangle {
             bgcolor = Literals.transparent
         }
         onClicked: {
-            btn.clicked
+            btn.clicked()
         }
     }
 
