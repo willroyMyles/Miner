@@ -45,7 +45,6 @@ Pane {
         onArmedChanged:{ armed = value}
     }
 
-
     Layout.fillHeight: true
     Layout.fillWidth: true
 
@@ -54,7 +53,7 @@ Pane {
     }
     smooth: true
 
-    MouseArea{
+    MouseArea {
         anchors.fill: parent
         id: area
 
@@ -71,36 +70,56 @@ Pane {
         }
     }
 
-
-
     RowLayout {
         anchors.fill: parent
 
-        Rectangle{
+        ColumnLayout {
 
-            //grapg background rectangle
-            anchors{
-                left: areaChart.left
-                right: areaChart.right
-                top: areaChart.top
-                bottom: areaChart.bottom
-                leftMargin: 50
-                rightMargin: 17
-                topMargin: 9
-                bottomMargin: 17
+            Rectangle {
+                id: hashLegend
+
+              //  anchors.fill: parent
+                Layout.leftMargin: areaChart.width - hashLayout.width
+                Layout.topMargin: -40
+
+                RowLayout {
+                    id: hashLayout
+                    Rectangle {
+                        implicitHeight: 20
+                        implicitWidth: implicitHeight+5
+                        border.width: 3
+                        border.color: Literals.borderColor
+                        color: Literals.chartBackgroundColor
+                    }
+
+                    Label {
+                        text: "Hashes"
+                        color: Literals.fontcolor
+                        font.weight: Literals.fontWeight
+                    }
+                }
             }
 
-            color: Literals.transparent
-        }
+            Rectangle {
+                //grapg background rectangle
+                anchors {
+                    left: areaChart.left
+                    right: areaChart.right
+                    top: areaChart.top
+                    bottom: areaChart.bottom
+                    leftMargin: 50
+                    rightMargin: 17
+                    topMargin: 9
+                    bottomMargin: 17
+                }
+                color: Literals.transparent
+            }
+            MChart {
+                id: areaChart
 
-        MChart {
-            id: areaChart
-
-
-
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            chartType: Charts.ChartType.LINE
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                chartType: Charts.ChartType.LINE
 
             fillColor: Literals.chartBackgroundColor
             labels: provider.getLabels()
@@ -108,35 +127,31 @@ Pane {
             strokeColor: "#72c4e8"
             pointColor: "#ffffff"
 
-            chartAnimated: false
-            chartOptions: ({
-                scaleLineWidth: 2,
-                barShowStroke: false,
-                scaleFontSize: 10,
-                scaleFontFamily: "sans-serif",
-                barValueSpacing: 10,
-                scaleFontColor: "#00444444",
-                pointDotRadius: 0,
-                bezierCurve: false,
-                               scaleGridLineColor: "rgba(220,220,220,1)",
-                               scaleLineColor: "rgba(220,220,220,1)",
-                               scaleShowLabels: true,
-                               scaleShowGridLines: true,
-                               //needed to override x-asix
-                               //draws 10 lines, incremented by 100
-                               scaleSteps : 5,
-                               scaleStepWidth: provider.maxValue/5,
-                               scaleOverride: true,
-
-
-            })
-            onValuesChanged: {
-                requestPaint()
+                chartAnimated: false
+                chartOptions: ({
+                                   "scaleLineWidth": 2,
+                                   "barShowStroke": false,
+                                   "scaleFontSize": 10,
+                                   "scaleFontFamily": "sans-serif",
+                                   "barValueSpacing": 10,
+                                   "scaleFontColor": "#444444",
+                                   "pointDotRadius": 0,
+                                   "bezierCurve": false,
+                                   "scaleGridLineColor": "rgba(220,220,220,1)",
+                                   "scaleLineColor": "rgba(220,220,220,1)",
+                                   "scaleShowLabels": true,
+                                   "scaleShowGridLines": true,
+                                   "scaleSteps"//needed to override x-asix
+                                   //draws 10 lines, incremented by 100
+                                   : 10,
+                                   "scaleStepWidth": dataprovider.maxValue / 10,
+                                   "scaleOverride": true
+                               })
+                onValuesChanged: {
+                    requestPaint()
+                }
             }
-
-
         }
-
         Item {
             width: 20
         }
@@ -152,13 +167,17 @@ Pane {
                 rotation: 180
 
                 Component.onCompleted: {
+
                 }
 
-                gradient: Gradient{
+                gradient: Gradient {
                     //commented gradients throws errors
-                    GradientStop{position: 0.0; color: Literals.blueButtonColor}
-                //    GradientStop{position: average; color: Literals.darkBackgroundColor}
-                //    GradientStop{position: average; color: Literals.blueButtonColorPressed}
+                    GradientStop {
+                        position: 0.0
+                        color: Literals.blueButtonColor
+                    }
+                    //    GradientStop{position: average; color: Literals.darkBackgroundColor}
+                    //    GradientStop{position: average; color: Literals.blueButtonColorPressed}
                 }
             }
 
@@ -168,8 +187,8 @@ Pane {
                 color: Literals.fontcolor
                 horizontalAlignment: Text.horizontalCenter
                 Layout.preferredWidth: 25
-               // Layout.alignment: Text.horizontalCenter
-                background: Rectangle{
+                // Layout.alignment: Text.horizontalCenter
+                background: Rectangle {
                     color: "red"
                 }
             }
