@@ -14,7 +14,7 @@ Rectangle
 
     property int commonBorderWidth : 1
 
-    z : -1
+    //z : -1
     implicitWidth: 1
 
 

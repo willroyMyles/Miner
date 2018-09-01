@@ -8,7 +8,8 @@ import "subclass"
 import MinerManager 1.0
 import DataProvider 1.0
 
-Page {
+BasePage {
+
 
     property bool startMining : false
 
@@ -33,28 +34,31 @@ Page {
     }
 
 
-    padding: 0
-    background: Rectangle{
-        //border.color: Literals.borderColor
-      //  border.width: Literals.borderWidth
-        color: Literals.transparent
-
-        Rectangle{
-            border.color: Literals.borderColor
-            border.width: Literals.borderWidth
-            anchors.left: parent.left
-            width: 1
-            Layout.fillHeight: true
-        }
-        Rectangle{
-            border.color: Literals.borderColor
-            border.width: Literals.borderWidth
-            anchors.right: parent.right
-            width: 1
-            Layout.fillHeight: true
-        }
-
+    padding: 10
+    background: Rectangle {
+        color: Literals.darkBackgroundColor
     }
+//    background: Rectangle{
+//        //border.color: Literals.borderColor
+//      //  border.width: Literals.borderWidth
+//        color: Literals.transparent
+
+//        Rectangle{
+//            border.color: Literals.borderColor
+//            border.width: Literals.borderWidth
+//            anchors.left: parent.left
+//            width: 1
+//            Layout.fillHeight: true
+//        }
+//        Rectangle{
+//            border.color: Literals.borderColor
+//            border.width: Literals.borderWidth
+//            anchors.right: parent.right
+//            width: 1
+//            Layout.fillHeight: true
+//        }
+
+//    }
 
 
         ScrollView {
@@ -67,15 +71,8 @@ Page {
             clip: true
             padding: 10
 
-
-
-
-
             background: Rectangle {
                 color: Literals.darkBackgroundColor
-             //   border.color: Literals.borderColor
-             //   border.width: Literals.borderWidth
-
             }
 
 
@@ -85,16 +82,7 @@ Page {
                 spacing:5
                 width: scrollview.width- scrollview.padding * 2
 
-                // Layout.fillWidth: true
-//                GraphicsCard {
-//                    id: card1
-//                    cardName: "card1"
-//                }
 
-//                GraphicsCard {
-//                    id: card2
-//                    cardName: "card2"
-//                }
             }
         }
 

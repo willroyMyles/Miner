@@ -11,19 +11,17 @@ ApplicationWindow {
     title: qsTr("JahMiner")
     minimumHeight: 350
     minimumWidth: 450
+    id: app
 
-
-//    background: Rectangle{
-//        border.color: Literals.borderColor
-//        color: Literals.darkBackgroundColor
-//        border.width: 12
-//    }
+    background: Rectangle {
+        color: Literals.darkBackgroundColor
+    }
 
     header: ToolBar {
         id: toolbar
-        //padding : 5
 
-        background: Rectangle{
+        //padding : 5
+        background: Rectangle {
             color: Literals.darkBackgroundColor
             border.color: Literals.borderColor
             border.width: Literals.borderWidth
@@ -31,19 +29,19 @@ ApplicationWindow {
         RowLayout {
             anchors.fill: parent
             spacing: 0
-            Banner{
-
+            Banner {
             }
 
-           HorizontalSpacer{}
+            HorizontalSpacer {
+            }
 
             ToolBarButton {
                 id: chartBtn
                 textValue: "Charts"
                 imageSource: "images/chart-40.png"
                 onClicked: {
-                    console.log("textValue")
-                    swipe.setCurrentIndex(0)
+                    swipe.state = "graph"
+                    bottonButtonPane.state = ""
                 }
             }
             ToolBarButton {
@@ -51,7 +49,8 @@ ApplicationWindow {
                 textValue: "Pool"
                 imageSource: "images/settings-40.png"
                 onClicked: {
-                    swipe.setCurrentIndex(1)
+                    swipe.state = "settings"
+                    bottonButtonPane.state = "settings"
                 }
             }
 
@@ -63,39 +62,71 @@ ApplicationWindow {
 
                 }
             }
+            Item {
+                //width: 15
+            }
         }
     }
 
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
-        SwipeView {
+        Rectangle {
+            anchors.fill: parent
 
-            id : swipe
+            id: swipe
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            background: Rectangle{
-                border.color: Literals.borderColor
-                border.width: Literals.borderWidth
-                color: Literals.transparent
-            }
-            currentIndex: 0
+            border.color: Literals.borderColor
+            border.width: Literals.borderWidth
 
-            GraphicsCardPage{
-                id : graph_page
-            }
-
-            SettingsPage{
+            //color: "red"
+            SettingsPage {
                 id: settings_page
+                anchors.fill: parent
+                z: 0
+                scale: 0.0
+                opacity: 0.0
             }
 
+            GraphicsCardPage {
+                id: graph_page
+                anchors.fill: parent
+                z: 0
+                scale: 0.0
+                opacity: 0.0
+            }
+
+            state: "graph"
+
+            states: [
+
+                State {
+                    name: "settings"
+                    PropertyChanges {
+                        target: settings_page
+                        scale: 1.0
+                        z: 3
+                        opacity: 1.0
+                    }
+                },
+                State {
+                    name: "graph"
+                    PropertyChanges {
+                        target: graph_page
+                        scale: 1.0
+                        z: 3
+                        opacity: 1.0
+                    }
+                }
+            ]
         }
 
         Pane {
+            id: bottonButtonPane
             Layout.fillWidth: true
-            //padding: 10
-            background: Rectangle{
+            background: Rectangle {
                 color: Literals.darkBackgroundColor
                 border.color: Literals.borderColor
                 border.width: Literals.borderWidth
@@ -124,8 +155,32 @@ ApplicationWindow {
                 BlueButton {
                     id: helpBtn
                     textValue: "Help"
+                    onClicked: {
+                        console.log("help button")
+                    }
                 }
             }
+
+            states: [
+                State {
+                    name: "settings"
+                    PropertyChanges {
+                        target: startBtn
+                        textValue: "Confirm"
+
+                    }
+
+                    PropertyChanges {
+                        target: helpBtn
+                        textValue: "Canel"
+                        onClicked:{
+                            console.log("cancel button")
+                        }
+
+                    }
+                }
+
+            ]
         }
     }
 }
