@@ -88,7 +88,7 @@ Pane {
                         implicitHeight: 20
                         implicitWidth: implicitHeight+5
                         border.width: 3
-                        border.color: Literals.borderColor
+                        border.color: "white"
                         color: Literals.chartBackgroundColor
                     }
 
@@ -143,8 +143,8 @@ Pane {
                                    "scaleShowGridLines": true,
                                    "scaleSteps"//needed to override x-asix
                                    //draws 10 lines, incremented by 100
-                                   : 10,
-                                   "scaleStepWidth": dataprovider.maxValue / 10,
+                                   : 5,
+                                   "scaleStepWidth": dataprovider.maxValue / 5,
                                    "scaleOverride": true
                                })
                 onValuesChanged: {
@@ -164,20 +164,17 @@ Pane {
                 implicitWidth: 25
                 Layout.fillHeight: true
                 color: Literals.transparent
-                rotation: 180
+               // rotation: 180
 
                 Component.onCompleted: {
 
                 }
 
-                gradient: Gradient {
-                    //commented gradients throws errors
-                    GradientStop {
-                        position: 0.0
-                        color: Literals.blueButtonColor
-                    }
-                    //    GradientStop{position: average; color: Literals.darkBackgroundColor}
-                    //    GradientStop{position: average; color: Literals.blueButtonColorPressed}
+                Rectangle{
+                    anchors.fill: parent
+                    Layout.fillWidth: true
+                    implicitHeight: parent.height * .6
+                    color: Literals.buttonColorHovered
                 }
             }
 
@@ -189,7 +186,7 @@ Pane {
                 Layout.preferredWidth: 25
                 // Layout.alignment: Text.horizontalCenter
                 background: Rectangle {
-                    color: "red"
+                    color: Literals.transparent
                 }
             }
         }

@@ -118,14 +118,12 @@ Chart {
     chartOptions: ({
         scaleLineWidth: 2,
         barShowStroke: false,
-        scaleFontSize: 10,
+        scaleFontSize: 0,
         scaleFontFamily: "sans-serif",
         barValueSpacing: 10,
         scaleFontColor: "#444444",
         pointDotRadius: 0,
         bezierCurve: false,
-
-
     })
 
     onValuesChanged: {

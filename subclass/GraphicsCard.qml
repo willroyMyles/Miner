@@ -137,18 +137,26 @@ Page {
                             SimpleLabel {
                                 id: high
                                 textValue: "high"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             SimpleLabel {
                                 id: low
                                 textValue: "low"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             SimpleLabel {
                                 id: mean
                                 textValue: "mean"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             SimpleLabel {
                                 id: latest
                                 textValue: "latest"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             Label {
                                 /*space*/ }
