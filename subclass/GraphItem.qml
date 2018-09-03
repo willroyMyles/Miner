@@ -62,11 +62,11 @@ Pane {
             areaChart.repaint()
 
             average = provider.getAverage()
-            areaChart.chartOptions = ({
-                                                          scaleStepWidth: provider.maxValue/10,
-                                                          pointDotRadius: 0,
+//            areaChart.chartOptions = ({
+//                                                          scaleStepWidth: provider.maxValue/10,
+//                                                          pointDotRadius: 0,
 
-                                                      })
+//                                                      })
         }
     }
 
@@ -88,7 +88,7 @@ Pane {
                         implicitHeight: 20
                         implicitWidth: implicitHeight+5
                         border.width: 3
-                        border.color: "white"
+                        border.color: Literals.buttonColorHovered
                         color: Literals.chartBackgroundColor
                     }
 
@@ -107,12 +107,15 @@ Pane {
                     right: areaChart.right
                     top: areaChart.top
                     bottom: areaChart.bottom
-                    leftMargin: 50
-                    rightMargin: 17
-                    topMargin: 9
-                    bottomMargin: 17
+                    leftMargin: 0
+                    rightMargin: 0
+                    topMargin: 0
+                    bottomMargin: 20
                 }
-                color: Literals.transparent
+                color: "#11eeeeee"
+                border.width: Literals.borderWidth
+                border.color: Literals.borderColor
+                //opacity: .2
             }
             MChart {
                 id: areaChart
@@ -128,25 +131,7 @@ Pane {
             pointColor: "#ffffff"
 
                 chartAnimated: false
-                chartOptions: ({
-                                   "scaleLineWidth": 2,
-                                   "barShowStroke": false,
-                                   "scaleFontSize": 10,
-                                   "scaleFontFamily": "sans-serif",
-                                   "barValueSpacing": 10,
-                                   "scaleFontColor": "#444444",
-                                   "pointDotRadius": 0,
-                                   "bezierCurve": false,
-                                   "scaleGridLineColor": "rgba(220,220,220,1)",
-                                   "scaleLineColor": "rgba(220,220,220,1)",
-                                   "scaleShowLabels": true,
-                                   "scaleShowGridLines": true,
-                                   "scaleSteps"//needed to override x-asix
-                                   //draws 10 lines, incremented by 100
-                                   : 5,
-                                   "scaleStepWidth": dataprovider.maxValue / 5,
-                                   "scaleOverride": true
-                               })
+
                 onValuesChanged: {
                     requestPaint()
                 }
