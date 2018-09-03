@@ -175,8 +175,8 @@ Page {
                     myIndex: cardIndex
                     onCardnameChanged: cardName.textValue = graph.cardname;
                     onStatusChanged: status.textValue = "Status : "+graph.status;
-                    onHighChanged: high.textValue = "High : "+graph.high.toString()
-                    onLowChanged: low.textValue = "Low : "+graph.low.toString()
+                    onHighChanged: high.textValue = "High ("+graph.currentTime+") : "+graph.high.toString()
+                    onLowChanged: low.textValue = "Low ("+currentTime+") : "+graph.low.toString()
                     onMeanChanged: mean.textValue = "Mean : "+graph.mean.toString()
                     onLatestChanged: latest.textValue = "Latest : "+ graph.latest.toString()
                     onArmedChanged: graph.armed == true? armedSwitch.checked = true : armedSwitch.checked = false;

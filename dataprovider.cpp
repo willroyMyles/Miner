@@ -98,8 +98,6 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 	emit meanChanged(mean);
     emit latestChanged(latest);
     emit dataAdded();
-
-
 }
 
 void DataProvider::randomSeries()
@@ -117,7 +115,12 @@ bool DataProvider::armed()
 
 Q_INVOKABLE void DataProvider::setArmed(bool value)
 {
-	armed_ = value;
+    armed_ = value;
+}
+
+QString DataProvider::time()
+{
+    return QTime::currentTime().toString("h:mm ap");
 }
 
 void DataProvider::setIndex(int dex)

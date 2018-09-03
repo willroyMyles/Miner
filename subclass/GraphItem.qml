@@ -28,7 +28,11 @@ Pane {
     property double mean: provider.getMean()
     property real latest: provider.getLatest()
     property bool armed: provider.armed();
+    property string currentTime: ""
 
+    function getCurrentTime(){
+        currentTime = provider.time();
+    }
 
     Connections{
         target : provider
@@ -39,6 +43,7 @@ Pane {
         onStatusChanged: {status = value }
         onMeanChanged: {mean = value}
         onDataAdded: {
+            getCurrentTime();
             areaChart.labels= provider.getLabels()
             areaChart.values= provider.getValues()
         }

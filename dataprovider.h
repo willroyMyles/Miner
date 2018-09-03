@@ -55,6 +55,7 @@ public:
 
 	Q_INVOKABLE bool armed();
 	Q_INVOKABLE void setArmed(bool value);
+    Q_INVOKABLE QString time();
 
     qreal maxValue(){return maxValue_;}
 
