@@ -43,7 +43,7 @@ QStringList DataProvider::getColors() const
 
 qreal DataProvider::getAverage()
 {
-    return summation/count/summation;
+    return summation/count/100;
 }
 
 void DataProvider::addToSeries(qreal yValue, QString xValue)
@@ -80,9 +80,11 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 	summation += yValue;
 	count++;
 	mean = summation / count;
+    average = mean/100;
 
     latest = qRound(yValue);
     emit meanChanged(qRound(mean));
+    emit averageChanged(average);
     emit latestChanged(latest);
     emit dataAdded();
 }

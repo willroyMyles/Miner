@@ -77,6 +77,7 @@ private:
     qreal low = NULL;
     qreal mean = 0.5;
     qreal latest = 0.0;
+    qreal average = 0.0;
     QString cardName = "gfore 10-22";
     QString status = "Inactive";
 	int index;
@@ -94,6 +95,7 @@ signals:
     void lowChanged(qreal value);
     void meanChanged(qreal value);
     void latestChanged(qreal value);
+    void averageChanged(qreal value);
     void dataAdded();
 	void armedChanged(bool value);
 	void miningStarted();

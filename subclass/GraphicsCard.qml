@@ -49,7 +49,8 @@ Page {
 
            CustomSwitch{
                 id: armedSwitch
-                Layout.alignment: Qt.AlignBottom
+                //Layout.alignment: Qt.AlignBottom
+                widthValue: 35
                 onClicked: {
                     provider.setArmed(on)
                     if(!on) status.textValue = "Status : Offline"
@@ -63,8 +64,7 @@ Page {
                 font.pixelSize: Qt.application.font.pixelSize * 1.9
                 color: Literals.fontcolor
                 font.weight: Literals.fontWeightLarger
-              //  anchors.bottom: parent.bottom
-                Layout.alignment: Qt.AlignBottom
+                verticalAlignment: Text.AlignBottom
 
             }
 
