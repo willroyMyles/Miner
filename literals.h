@@ -27,6 +27,9 @@ class Literals : public QObject{
     Q_PROPERTY(QVariant switchOffColor READ switchOffColor CONSTANT)
     Q_PROPERTY(QVariant switchOnColor READ switchOnColor CONSTANT)
 
+    Q_PROPERTY(QVariant animationLengthShort READ animationLengthShort CONSTANT)
+    Q_PROPERTY(QVariant animationLengthMedium READ animationLengthMedium CONSTANT)
+    Q_PROPERTY(QVariant animationLengthLong READ animationLengthLong CONSTANT)
 
 
 public:
@@ -47,6 +50,10 @@ public:
     QVariant blueButtonColorPressed(){return   blueButtonColor().value<QColor>().darker(250)  ;}
     QVariant switchOffColor(){return   QColor(90,90,90) ;}
     QVariant switchOnColor(){return   blueButtonColor().value<QColor>()  ;}
+    QVariant animationLengthShort(){return   150  ;}
+    QVariant animationLengthMedium(){return   500  ;}
+    QVariant animationLengthLong(){return   750 ;}
+
 
 
 

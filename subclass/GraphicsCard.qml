@@ -54,31 +54,36 @@ Page {
                 }
            }
 
-            Text {
+            Label {
                 id: minerIndex
                 text: "Miner "+ cardIndex
                 font.pixelSize: Qt.application.font.pixelSize * 1.9
                 color: Literals.fontcolor
-               // font.weight: 65
-
+                font.weight: Literals.fontWeightLarger
+                Layout.topMargin: -5
             }
+
+
 
             HorizontalSpacer {
             }
 
             Rectangle {
-                    implicitHeight: 25
-                    implicitWidth: 25
+                    implicitHeight: 16
+                    implicitWidth: 16
                     color: Literals.transparent
                     border.color: Literals.borderColor
                     border.width: Literals.borderWidth
                     radius: 2
-                    Layout.rightMargin: 12
+                    Layout.rightMargin: -1
+                    Layout.topMargin: -5
 
                     Text {
                         id: name
                         text: qsTr( "▲")
                         anchors.centerIn: parent
+                        font.pixelSize: Qt.application.font.pixelSize * .6
+                        color: Literals.borderColor
                     }
                 }
 
@@ -86,11 +91,17 @@ Page {
               //  text: "▲"
             }
 
+        Item{
+            implicitHeight: 20
+            width: 2
+        }
         ///////////////////////////////////////////////////////////////////////////////  top row
         ///////////////////////////////////////////////////////////////////////////////  card Content
         RowLayout {
 
             Layout.fillWidth: true
+
+
 
             Pane {
                 padding: 0
@@ -126,18 +137,26 @@ Page {
                             SimpleLabel {
                                 id: high
                                 textValue: "high"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             SimpleLabel {
                                 id: low
                                 textValue: "low"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             SimpleLabel {
                                 id: mean
                                 textValue: "mean"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             SimpleLabel {
                                 id: latest
                                 textValue: "latest"
+                                opacityValue: .75
+                                font.weight: Literals.fontWeightLighter
                             }
                             Label {
                                 /*space*/ }

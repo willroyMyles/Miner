@@ -28,35 +28,22 @@ import "Chart.js" as Charts
 
 Chart {
 
-    /*!
-     * String array used as labels in charts.
-     */
     property var labels
-    /*!
-     * Data array used as values in charts.
-     */
+
     property var values
-    /*!
-     * Color of primitives used in BAR and RADAR charts.
-     */
+
     property color color
-    /*!
-     * Color arrray of primitives used in PIE, DOUGHNUT and POLAR charts.
-     */
+
     property var colors
-    /*!
-     * Color used to fill space under the line in LINE chart.
-     * Default value is transparent.
-     */
+
     property color fillColor: "#00ffffff"
-    /*!
-     * Color of line used in LINE chart.
-     */
+
     property color strokeColor
-    /*!
-     *  Color of points used in LINE chart.
-     */
+
     property color pointColor
+
+    property int max_value: 100// max value for y-axis
+    property int step_width: 5  //number of horizontal lines
 
 
     /*!
@@ -116,18 +103,24 @@ Chart {
     chartAnimationDuration: 300
 
     chartOptions: ({
-        scaleLineWidth: 2,
-        barShowStroke: false,
-        scaleFontSize: 10,
-        scaleFontFamily: "sans-serif",
-        barValueSpacing: 10,
-        scaleFontColor: "#444444",
-        pointDotRadius: 0,
-        bezierCurve: false,
-
-
-    })
-
+                       "scaleLineWidth": 0,
+                       "barShowStroke": false,
+                       "scaleFontSize": 10,
+                       "scaleFontFamily": "sans-serif",
+                       "barValueSpacing": 10,
+                       "scaleFontColor": "#444444",
+                       "pointDotRadius": 0,
+                       "bezierCurve": false,
+                       "scaleGridLineColor": Literals.borderColor,
+                       "scaleLineColor": "rgba(222,222,222,.1)",
+                       "scaleShowLabels": false,
+                       "scaleShowGridLines": false,
+                       "scaleSteps"//needed to override x-asix
+                       //draws 10 lines, incremented by 100
+                       : step_width,
+                       "scaleStepWidth": max_value/step_width,
+                       "scaleOverride": true
+                   })
     onValuesChanged: {
         if (chartType === Charts.ChartType.BAR
                 || chartType === Charts.ChartType.RADAR) {

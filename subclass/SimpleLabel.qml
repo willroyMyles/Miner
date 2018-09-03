@@ -6,6 +6,7 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 Label {
     property string textValue: ""
+    property real opacityValue: 0.95
 
     TextMetrics{
         id: textMetrics
@@ -19,4 +20,5 @@ Label {
     horizontalAlignment: Text.AlignRight
     font: textMetrics.font
     color: Literals.fontcolor
+    opacity: opacityValue
 }

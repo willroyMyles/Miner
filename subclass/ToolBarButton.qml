@@ -10,8 +10,8 @@ Rectangle {
     property string imageSource: ""
     property string textValue: ""
     property string bgcolor: Literals.transparent
+    signal clicked
 
-    signal clicked()
 
     Behavior on bgcolor {
 
@@ -19,10 +19,9 @@ Rectangle {
             duration: 200
         }
     }
-
-    implicitWidth: 100
-    color: bgcolor
-
+    Layout.fillHeight: true
+    implicitWidth: 115
+    color: Literals.transparent
     MouseArea {
         anchors.fill: parent
         hoverEnabled: true
@@ -46,35 +45,61 @@ Rectangle {
         }
     }
 
-    Layout.fillHeight: true
-    RowLayout {
+
+    Rectangle {
+        id: leftrect
+        x: 0
+        y: 0
+        border.color: Literals.borderColor
+        color: Literals.borderColor
+        implicitWidth: 1
+        implicitHeight: parent.height
+        opacity: .1
+    }
+
+    Rectangle {
         anchors.fill: parent
-
-//        Rectangle {
-//            Layout.fillHeight: true
-//            implicitWidth: 1
-//            implicitHeight: parent.height
-//            border.color: Literals.borderColor
-//            anchors.left: parent.left
-//            color: Literals.borderColor
-//        }
-
-        CustomBorder{
-            commonBorder: false
-            borderColor: Literals.borderColor
-            bBorderwidth: 1
+        color: bgcolor
+        anchors.margins: {
+            left: 0
+            right: 0
+            top: 2
+            bottom: 2
         }
 
-        Image {
-            id: name
-            source: "../" + imageSource
-            sourceSize.width: 20
-        }
-        Label {
-            id: textval
-            text: textValue
-            color: Literals.fontcolor
-            font.weight: Literals.fontWeight
+
+
+
+
+        RowLayout {
+            anchors.fill: parent
+            spacing: 5
+
+            //        CustomBorder{
+            //            commonBorder: false
+            //            borderColor: Literals.borderColor
+            //            bBorderwidth: 12
+            //        }
+            HorizontalSpacer {
+            }
+
+            Image {
+                id: buttonimage
+                source: "../" + imageSource
+                sourceSize.width: 20
+                verticalAlignment: Image.AlignTop
+            }
+            Label {
+                id: textval
+                text: textValue
+                color: Literals.fontcolor
+                font.weight: Literals.fontWeight
+                font.pixelSize: Qt.application.font.pixelSize * 1.2
+                baselineOffset: 0
+                Layout.topMargin: 2
+            }
+            HorizontalSpacer {
+            }
         }
     }
 }

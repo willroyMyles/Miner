@@ -22,5 +22,6 @@
         <file>subclass/CustomSwitch.qml</file>
         <file>SettingsPage.qml</file>
         <file>subclass/SettingsNode.qml</file>
+        <file>subclass/BasePage.qml</file>
     </qresource>
 </RCC>
