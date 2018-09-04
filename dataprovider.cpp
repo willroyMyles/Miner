@@ -4,10 +4,6 @@
 #include "dataprovider.h"
 #include <QDebug>
 
-/*!
- * \brief Class provides test data set for MiloCharts Demo project.
- * \class DataProvider
- */
 
 DataProvider::DataProvider(QObject *parent) :
     QObject(parent),summation(0),count(0)
@@ -17,20 +13,14 @@ DataProvider::DataProvider(QObject *parent) :
 
 }
 
-/*!
- * \brief DataProvider::getValues - returns chart values.
- * \return
- */
+
 QList<qreal> DataProvider::getValues() const
 {
    // return { 1.5, 2.5, 1.5, 2.5, 2.0, 1.0, 0.5 };
     return valueList;
 }
 
-/*!
- * \brief DataProvider::getLabels - returns chart labels.
- * \return
- */
+
 QStringList DataProvider::getLabels() const
 {
     //return QStringList({ "8:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00" });
@@ -38,10 +28,7 @@ QStringList DataProvider::getLabels() const
     return labelList;
 }
 
-/*!
- * \brief DataProvider::getColors - returns chart colors.
- * \return
- */
+
 QStringList DataProvider::getColors() const
 {
     return QStringList({ "#54bc9b",
@@ -56,7 +43,7 @@ QStringList DataProvider::getColors() const
 
 qreal DataProvider::getAverage()
 {
-    return summation/count/summation;
+    return summation/count/100;
 }
 
 void DataProvider::addToSeries(qreal yValue, QString xValue)
@@ -66,13 +53,13 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 
 	if (first_run) {
 		qDebug() << low;
-		low = yValue;
-		emit lowChanged(low);
-		first_run = false;
+        low = qRound(yValue);
+        emit lowChanged(low);
+        first_run = false;
 	}
 
 	if (low > yValue) {
-		low = yValue;
+        low = qRound(yValue);
 		emit lowChanged(low);
 	}
 
@@ -83,7 +70,7 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 
 
     if(yValue> maxValue_){
-        maxValue_ = yValue;
+        maxValue_ = qRound(yValue);
         emit maxValueChanged(maxValue_);
     }
 
@@ -93,13 +80,13 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 	summation += yValue;
 	count++;
 	mean = summation / count;
+    average = mean/100;
 
-    latest = yValue;
-	emit meanChanged(mean);
+    latest = qRound(yValue);
+    emit meanChanged(qRound(mean));
+    emit averageChanged(average);
     emit latestChanged(latest);
     emit dataAdded();
-
-
 }
 
 void DataProvider::randomSeries()
@@ -117,7 +104,12 @@ bool DataProvider::armed()
 
 Q_INVOKABLE void DataProvider::setArmed(bool value)
 {
-	armed_ = value;
+    armed_ = value;
+}
+
+QString DataProvider::time()
+{
+    return QTime::currentTime().toString("h:mm ap");
 }
 
 void DataProvider::setIndex(int dex)
@@ -195,8 +187,8 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 		connect(process, &MinerProcess::minerStatusChanged, [this](MinerStatus status)
 		{
 			switch (status)
-			{
-			case MinerStatus::Idle:
+            {
+            case MinerStatus::Idle:
 				/*this->setMinerStatus(MinerConnection::Inactive);
 				displayLabel->setText("Inactive");*/
 				this->status = "Inactive";
@@ -218,6 +210,9 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 
 				break;
 			}
+
+
+
 			emit statusChanged(this->status);
 
 		});

@@ -6,12 +6,12 @@ import QtGraphicalEffects 1.0
 import DataProvider 1.0
 
 Page {
-    property alias cardName: cardName.text
-    property alias status: status.text
-    property alias high: high.text
-    property alias low: low.text
-    property alias mean: mean.text
-    property alias latest: latest.text
+    property alias cardName: cardName.textValue
+    property alias status: status.textValue
+    property alias high: high.textValue
+    property alias low: low.textValue
+    property alias mean: mean.textValue
+    property alias latest: latest.textValue
     property int cardIndex: 0
 
     property DataProvider provider: null
@@ -49,8 +49,12 @@ Page {
 
            CustomSwitch{
                 id: armedSwitch
+                //Layout.alignment: Qt.AlignBottom
+                widthValue: 35
                 onClicked: {
                     provider.setArmed(on)
+                    if(!on) status.textValue = "Status : Offline"
+                    else status.textValue = "Status : "+provider.getStatus() ;
                 }
            }
 
@@ -60,7 +64,8 @@ Page {
                 font.pixelSize: Qt.application.font.pixelSize * 1.9
                 color: Literals.fontcolor
                 font.weight: Literals.fontWeightLarger
-                Layout.topMargin: -5
+                verticalAlignment: Text.AlignBottom
+
             }
 
 
@@ -100,9 +105,6 @@ Page {
         RowLayout {
 
             Layout.fillWidth: true
-
-
-
             Pane {
                 padding: 0
                 Layout.preferredWidth: 120
@@ -174,9 +176,9 @@ Page {
                     id: graph
                     myIndex: cardIndex
                     onCardnameChanged: cardName.textValue = graph.cardname;
-                    onStatusChanged: status.textValue = "Status : "+graph.status;
-                    onHighChanged: high.textValue = "High : "+graph.high.toString()
-                    onLowChanged: low.textValue = "Low : "+graph.low.toString()
+                    onStatusChanged: armedSwitch.on? status.textValue = "Status : "+provider.getStatus() : status.textValue = "Status : Offline" ;
+                    onHighChanged: high.textValue = "High ("+graph.currentTime+") : "+graph.high.toString()
+                    onLowChanged: low.textValue = "Low ("+currentTime+") : "+graph.low.toString()
                     onMeanChanged: mean.textValue = "Mean : "+graph.mean.toString()
                     onLatestChanged: latest.textValue = "Latest : "+ graph.latest.toString()
                     onArmedChanged: graph.armed == true? armedSwitch.checked = true : armedSwitch.checked = false;

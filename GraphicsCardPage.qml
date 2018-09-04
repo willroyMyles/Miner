@@ -48,10 +48,7 @@ BasePage {
                 spacing:5
                 width: scrollview.width- scrollview.padding * 2
 
-                //stand in
-                GraphicsCard{
-
-                }
+           
 
             }
         }

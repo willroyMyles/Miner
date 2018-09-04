@@ -28,7 +28,11 @@ Pane {
     property double mean: provider.getMean()
     property real latest: provider.getLatest()
     property bool armed: provider.armed();
+    property string currentTime: ""
 
+    function getCurrentTime(){
+        currentTime = provider.time();
+    }
 
     Connections{
         target : provider
@@ -39,10 +43,12 @@ Pane {
         onStatusChanged: {status = value }
         onMeanChanged: {mean = value}
         onDataAdded: {
+            getCurrentTime();
             areaChart.labels= provider.getLabels()
             areaChart.values= provider.getValues()
         }
         onArmedChanged:{ armed = value}
+        onAverageChanged: {average = value}
     }
 
     Layout.fillHeight: true
@@ -61,7 +67,7 @@ Pane {
             provider.randomSeries();
             areaChart.repaint()
 
-            average = provider.getAverage()
+            //average = provider.getAverage()
 //            areaChart.chartOptions = ({
 //                                                          scaleStepWidth: provider.maxValue/10,
 //                                                          pointDotRadius: 0,
@@ -85,9 +91,9 @@ Pane {
                 RowLayout {
                     id: hashLayout
                     Rectangle {
-                        implicitHeight: 20
-                        implicitWidth: implicitHeight+5
-                        border.width: 3
+                        implicitHeight: 15
+                        implicitWidth: implicitHeight+3
+                        border.width: 2
                         border.color: Literals.buttonColorHovered
                         color: Literals.chartBackgroundColor
                     }
@@ -96,11 +102,14 @@ Pane {
                         text: "Hashes"
                         color: Literals.fontcolor
                         font.weight: Literals.fontWeight
+                        font.pixelSize: Qt.application.font.pixelSize * 1.2
+
                     }
                 }
             }
 
             Rectangle {
+                id: graphBackground
                 //grapg background rectangle
                 anchors {
                     left: areaChart.left
@@ -147,32 +156,41 @@ Pane {
                 border.color: Literals.borderColor
                 border.width: Literals.borderWidth
                 implicitWidth: 25
-                Layout.fillHeight: true
-                color: Literals.transparent
-               // rotation: 180
+                implicitHeight: graphBackground.height
+
+                color: "#11eeeeee"
+                rotation: 180
 
                 Component.onCompleted: {
 
                 }
 
                 Rectangle{
-                    anchors.fill: parent
-                    Layout.fillWidth: true
-                    implicitHeight: parent.height * .6
-                    color: Literals.buttonColorHovered
+
+                    implicitHeight: (parent.height-Literals.borderWidth*2) * average
+                    implicitWidth: 21
+                    x:Literals.borderWidth
+                    y:Literals.borderWidth
+
+                    anchors{
+                       // centerIn: parent
+                        bottomMargin: 0
+                    }
+
+                    color: Literals.blueButtonColor
+                    //anchors.fill: parent
+
+
                 }
             }
 
             Label {
                 id: avg
                 text: "Avg"
+                horizontalAlignment: Text.AlignHCenter
                 color: Literals.fontcolor
-                horizontalAlignment: Text.horizontalCenter
-                Layout.preferredWidth: 25
-                // Layout.alignment: Text.horizontalCenter
-                background: Rectangle {
-                    color: Literals.transparent
-                }
+                Layout.preferredWidth: averageBar.width
+
             }
         }
     }
