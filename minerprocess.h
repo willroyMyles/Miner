@@ -64,10 +64,14 @@ class MinerManager : public QObject
 public:
 
 	explicit MinerManager(QObject *parent = Q_NULLPTR);
-	QString poolUrl = "165.227.72.177:3333";
-	QString identifier = "x";
-	QString password = "jahminer";
-	QString walletId = "43QGgipcHvNLBX3nunZLwVQpF6VbobmGcQKzXzQ5xMfJgzfRBzfXcJHX1tUHcKPm9bcjubrzKqTm69JbQSL4B3f6E3mNCbU";
+    QString poolUrl = "165.227.72.177:3333";
+    QString identifier = "x";
+    QString password = "jahminer";
+    QString walletId = "43QGgipcHvNLBX3nunZLwVQpF6VbobmGcQKzXzQ5xMfJgzfRBzfXcJHX1tUHcKPm9bcjubrzKqTm69JbQSL4B3f6E3mNCbU";
+    QString poolUrlText = "165.227.72.177:3333";
+    QString identifierText = "x";
+    QString passwordText = "jahminer";
+    QString walletIdText = "43QGgipcHvNLBX3nunZLwVQpF6VbobmGcQKzXzQ5xMfJgzfRBzfXcJHX1tUHcKPm9bcjubrzKqTm69JbQSL4B3f6E3mNCbU";
 
 	QVector<MinerProcess*> processes;
 
@@ -95,6 +99,7 @@ public:
     Q_INVOKABLE QString getWalletId() const;
     Q_INVOKABLE void setWalletId(const QString &value);
 
+    Q_INVOKABLE void resetSettings();
     Q_INVOKABLE void resetSettingsToDefault();
     Q_INVOKABLE void saveAndApplySettings();
     Q_INVOKABLE void restoreSettings();
@@ -104,10 +109,10 @@ private:
 
 signals:
     void processCreated(DataProvider *provider);
-    void poolUrlChanged(QString);
-    void passwordChanged(QString);
-    void identifierChanged(QString);
-    void walletIdChanged(QString);
+    void poolUrlChanged(QString value);
+    void passwordChanged(QString value);
+    void identifierChanged(QString value);
+    void walletIdChanged(QString value);
 
 };
 

@@ -159,20 +159,29 @@ MinerManager::MinerManager( QObject *parent) :QObject(parent){
 
 Q_INVOKABLE QString MinerManager::getWalletId() const
 {
-    return walletId;
+    return walletIdText;
 }
 
 Q_INVOKABLE void MinerManager::setWalletId(const QString &value)
 {
-    walletId = value;
+    walletIdText = value;
+}
+
+void MinerManager::resetSettings()
+{
+    emit walletIdChanged(walletIdText);
+    emit poolUrlChanged(poolUrlText);
+    emit passwordChanged(passwordText);
+    emit identifierChanged(identifierText);
 }
 
 Q_INVOKABLE void MinerManager::resetSettingsToDefault()
 {
-    walletId = settingsManager->getValue("wallet_id", Constants::MINER_DEFAULT_WALLET_ID).toString();
-    poolUrl = settingsManager->getValue("pool", Constants::MINER_DEFAULT_POOL).toString();
-    password = settingsManager->getValue("password", "").toString();
-    identifier =  settingsManager->getValue("identifier", "").toString();
+    walletIdText = settingsManager->getValue("wallet_id", walletId).toString();
+    poolUrlText = settingsManager->getValue("pool", poolUrl).toString();
+    passwordText = settingsManager->getValue("password", password).toString();
+    identifierText =  settingsManager->getValue("identifier", identifier).toString();
+
     emit walletIdChanged(walletId);
     emit poolUrlChanged(poolUrl);
     emit passwordChanged(password);
@@ -181,12 +190,12 @@ Q_INVOKABLE void MinerManager::resetSettingsToDefault()
 
 Q_INVOKABLE void MinerManager::saveAndApplySettings()
 {
-        settingsManager->setValue("wallet_id", walletId);
-        settingsManager->setValue("pool", poolUrl);
-        settingsManager->setValue("password", password);
-        settingsManager->setValue("identifier", identifier);
+        settingsManager->setValue("wallet_id", walletIdText);
+        settingsManager->setValue("pool", poolUrlText);
+        settingsManager->setValue("password", passwordText);
+        settingsManager->setValue("identifier", identifierText);
 
-        //restart mining
+
             for( auto pro : dataProviderList){
                 if(pro->isProcessMining())
                     pro->restartProcesses();
@@ -195,40 +204,42 @@ Q_INVOKABLE void MinerManager::saveAndApplySettings()
 
 Q_INVOKABLE void MinerManager::restoreSettings()
 {
-    settingsManager->setValue("wallet_id", walletId);
+         settingsManager->setValue("wallet_id", walletId);
         settingsManager->setValue("pool", poolUrl);
         settingsManager->setValue("password", password);
-    settingsManager->setValue("identifier", identifier);
+         settingsManager->setValue("identifier", identifier);
+
+         resetSettingsToDefault();
 }
 
 Q_INVOKABLE QString MinerManager::getPassword() const
 {
-    return password;
+    return passwordText;
 }
 
 Q_INVOKABLE void MinerManager::setPassword(const QString &value)
 {
-    password = value;
+    passwordText = value;
 }
 
 Q_INVOKABLE QString MinerManager::getIdentifier() const
 {
-    return identifier;
+    return identifierText;
 }
 
 Q_INVOKABLE void MinerManager::setIdentifier(const QString &value)
 {
-    identifier = value;
+    identifierText = value;
 }
 
 Q_INVOKABLE QString MinerManager::getPoolUrl() const
 {
-    return poolUrl;
+    return poolUrlText;
 }
 
 Q_INVOKABLE void MinerManager::setPoolUrl(const QString &value)
 {
-    poolUrl = value;
+    poolUrlText = value;
 }
 
 Q_INVOKABLE QVector<int> MinerManager::providerlist()
@@ -305,13 +316,13 @@ void MinerProcess::startMining()
 	args << "-u" << "43QGgipcHvNLBX3nunZLwVQpF6VbobmGcQKzXzQ5xMfJgzfRBzfXcJHX1tUHcKPm9bcjubrzKqTm69JbQSL4B3f6E3mNCbU";
 	*/
 	args << "--currency" << "monero7";
-	args << "-o" << minerMan->poolUrl;
+    args << "-o" << minerMan->poolUrlText;
 	if (minerMan->password.isEmpty())
 		args << "-p" << Constants::MINER_DEFAULT_PASSWORD;
 	else
-		args << "-p" << minerMan->password;
-	args << "-r" << minerMan->identifier;
-	args << "-u" << minerMan->walletId;
+        args << "-p" << minerMan->passwordText;
+    args << "-r" << minerMan->identifierText;
+    args << "-u" << minerMan->walletIdText;
 	args << "-i" << QString("%1").arg(this->networkPort);
 	if (gpu.type == GPUType::AMD)
 		args << "--noNVIDIA";

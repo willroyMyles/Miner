@@ -64,6 +64,7 @@ public:
 
     void loadSettings(QString path) {
         settings = new QSettings(path, QSettings::IniFormat);
+        qDebug() << QDir::currentPath();
     }
 
     void setValue(QString name, QVariant value) {
