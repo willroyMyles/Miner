@@ -12,13 +12,15 @@ BasePage {
 
 
     property bool startMining : false
+    property string walletid: manager.getWalletId();
+    property string poolurl: manager.getPoolUrl();
+    property string password: manager.getPassword();
+    property string identifier: manager.getIdentifier();
 
 
     onStartMiningChanged: {
         if(startMining)  manager.startMining()
         else manager.stopMining();
-
-
     }
 
     MinerManager{

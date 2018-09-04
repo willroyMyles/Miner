@@ -130,7 +130,7 @@ Q_INVOKABLE void DataProvider::startProcess()
 
 	if (armed()) {
 		this->process->startMining();
-		//emit this->miningStarted();
+        emit this->miningStarted();
 	}
 }
 
@@ -139,7 +139,20 @@ Q_INVOKABLE void DataProvider::stopProcess()
 	if (this->process->isMining()) {
 		this->process->stopMining();
 		//emit this->miningStopped();
-	}
+        emit miningStopped();
+    }
+}
+
+bool DataProvider::isProcessMining()
+{
+    return process->isMining();
+}
+
+void DataProvider::restartProcesses()
+{
+    stopProcess();
+    startProcess();
+
 }
 
 void DataProvider::setMinerProcess(MinerProcess *process)

@@ -6,6 +6,16 @@ import "subclass"
 //import "settings"
 BasePage {
 
+    property string walletid: ""
+    property string poolurl: ""
+    property string password: ""
+    property string identifier: ""
+
+    onWalletidChanged: {walletNode.textValue = walletid    }
+    onPoolurlChanged: {poolNode.textValue = poolurl }
+    onPasswordChanged: {passwordNode.textValue = password }
+    onIdentifierChanged: {identifierNode.textValue = identifier }
+
     padding: 10
 
     background: Rectangle {
@@ -33,39 +43,37 @@ BasePage {
             }
 
             SettingsNode {
+                id: walletNode
                 labeld: "Walled ID"
                 textfieldd: "Enter wallet ID here"
+                textValue: walletid
             }
 
             SettingsNode {
+                id: poolNode
                 labeld: "Pool Address"
                 textfieldd: "Enter Pool Address"
+                textValue: poolurl
             }
 
             SettingsNode {
+                id: identifierNode
                 labeld: "Identifier"
                 textfieldd: "Enter Identifier"
+                textValue: identifier
             }
 
             SettingsNode {
+                id: passwordNode
                 labeld: "Password"
                 textfieldd: "Enter Password"
+                textValue: password
             }
 
             Item {
                 Layout.fillHeight: true
             }
 
-//            RowLayout {
-//                Button {
-//                    Layout.fillWidth: true
-//                    text: "cancel"
-//                }
-//                Button {
-//                    text: "confirm"
-//                    Layout.fillWidth: true
-//                }
-//            }
         }
     }
 }

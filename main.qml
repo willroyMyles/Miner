@@ -96,7 +96,13 @@ ApplicationWindow {
                 z: 0
                 scale: 0.0
                 opacity: 0.0
+              onPoolurlChanged: {settings_page.poolurl = graph_page.poolurl}
+              onPasswordChanged: {settings_page.password = graph_page.password}
+              onWalletidChanged: {settings_page.walletid = graph_page.walletid}
+              onIdentifierChanged: {settings_page.identifier = graph_page.identifier}
             }
+
+
 
             state: "graph"
 

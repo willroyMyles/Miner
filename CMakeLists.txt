@@ -69,12 +69,14 @@ set(HEADERS
 	dataprovider.h
 	literals.h
 	minerProcess.h
-	constants.h)
+        constants.h
+        settingsmanager.h)
 set(SRCS
 	dataprovider.cpp
 	main.cpp
 	minerprocess.cpp
 	constants.cpp
+        settingsmanager.cpp
 	cuda_gpu_list.cu)
 
 

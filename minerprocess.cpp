@@ -9,7 +9,7 @@ and/or modify it under the terms of the GPLv3 License
 For more information see the LICENSE file
 *************************************************************************/
 
-#include <Cl/cl.h>
+#include <OpenCl/cl.h>
 #include <QTimer>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -154,11 +154,86 @@ QList<GPU> get_cuda_devices() {
 }
 */
 MinerManager::MinerManager( QObject *parent) :QObject(parent){
+    settingsManager = new SettingsManager();
+}
+
+Q_INVOKABLE QString MinerManager::getWalletId() const
+{
+    return walletId;
+}
+
+Q_INVOKABLE void MinerManager::setWalletId(const QString &value)
+{
+    walletId = value;
+}
+
+Q_INVOKABLE void MinerManager::resetSettingsToDefault()
+{
+    walletId = settingsManager->getValue("wallet_id", Constants::MINER_DEFAULT_WALLET_ID).toString();
+    poolUrl = settingsManager->getValue("pool", Constants::MINER_DEFAULT_POOL).toString();
+    password = settingsManager->getValue("password", "").toString();
+    identifier =  settingsManager->getValue("identifier", "").toString();
+    emit walletIdChanged(walletId);
+    emit poolUrlChanged(poolUrl);
+    emit passwordChanged(password);
+    emit identifierChanged(identifier);
+}
+
+Q_INVOKABLE void MinerManager::saveAndApplySettings()
+{
+        settingsManager->setValue("wallet_id", walletId);
+        settingsManager->setValue("pool", poolUrl);
+        settingsManager->setValue("password", password);
+        settingsManager->setValue("identifier", identifier);
+
+        //restart mining
+            for( auto pro : dataProviderList){
+                if(pro->isProcessMining())
+                    pro->restartProcesses();
+            }
+}
+
+Q_INVOKABLE void MinerManager::restoreSettings()
+{
+    settingsManager->setValue("wallet_id", walletId);
+        settingsManager->setValue("pool", poolUrl);
+        settingsManager->setValue("password", password);
+    settingsManager->setValue("identifier", identifier);
+}
+
+Q_INVOKABLE QString MinerManager::getPassword() const
+{
+    return password;
+}
+
+Q_INVOKABLE void MinerManager::setPassword(const QString &value)
+{
+    password = value;
+}
+
+Q_INVOKABLE QString MinerManager::getIdentifier() const
+{
+    return identifier;
+}
+
+Q_INVOKABLE void MinerManager::setIdentifier(const QString &value)
+{
+    identifier = value;
+}
+
+Q_INVOKABLE QString MinerManager::getPoolUrl() const
+{
+    return poolUrl;
+}
+
+Q_INVOKABLE void MinerManager::setPoolUrl(const QString &value)
+{
+    poolUrl = value;
 }
 
 Q_INVOKABLE QVector<int> MinerManager::providerlist()
 {
-	return somenumber;
+    return somenumber;
 }
 
 //Q_INVOKABLE QQmlListProperty<DataProvider*> MinerManager::dataHolderLists()
