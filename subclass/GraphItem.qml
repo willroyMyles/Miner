@@ -67,12 +67,6 @@ Pane {
             provider.randomSeries();
             areaChart.repaint()
 
-            //average = provider.getAverage()
-//            areaChart.chartOptions = ({
-//                                                          scaleStepWidth: provider.maxValue/10,
-//                                                          pointDotRadius: 0,
-
-//                                                      })
         }
     }
 
@@ -166,7 +160,12 @@ Pane {
                 }
 
                 Rectangle{
-
+                   onImplicitHeightChanged: {
+                       console.log(high)
+                       console.log(average)
+                       console.log(average/high)
+                       console.warn(" \n")
+                   }
                     implicitHeight: (parent.height-Literals.borderWidth*2) * average
                     implicitWidth: 21
                     x:Literals.borderWidth

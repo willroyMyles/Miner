@@ -43,16 +43,15 @@ QStringList DataProvider::getColors() const
 
 qreal DataProvider::getAverage()
 {
-    return summation/count/100;
+    return summation/count/summation;
 }
 
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
 
-	qDebug() << yValue;
+//	qDebug() << yValue;
 
 	if (first_run) {
-		qDebug() << low;
         low = qRound(yValue);
         emit lowChanged(low);
         first_run = false;
@@ -80,7 +79,7 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 	summation += yValue;
 	count++;
 	mean = summation / count;
-    average = mean/100;
+    average = mean/maxValue_;
 
     latest = qRound(yValue);
     emit meanChanged(qRound(mean));
