@@ -63,6 +63,8 @@ public:
 	void setMinerProcess(MinerProcess *process);
 	Q_INVOKABLE void startProcess();
 	Q_INVOKABLE void stopProcess();
+    Q_INVOKABLE bool isProcessMining();
+    void restartProcesses();
 
 private:
     QList<qreal> valueList;// y-axis

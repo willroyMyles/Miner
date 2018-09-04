@@ -7,6 +7,7 @@ Pane{
     id: pane
     property alias labeld: label.text
     property alias textfieldd: textfield.placeholderText
+    property alias textValue: textfield.text
     Layout.fillWidth: true
     height: 155
     background: Rectangle{

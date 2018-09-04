@@ -11,54 +11,20 @@ import DataProvider 1.0
 BasePage {
 
 
-    property bool startMining : false
+    property string walletid: manager.getWalletId();
+    property string poolurl: manager.getPoolUrl();
+    property string password: manager.getPassword();
+    property string identifier: manager.getIdentifier();
 
 
-    onStartMiningChanged: {
-        if(startMining)  manager.startMining()
-        else manager.stopMining();
 
-
-    }
-
-    MinerManager{
-        id: manager
-        Component.onCompleted: {
-            manager.initialize();
-        }
-
-        onProcessCreated: {
-            console.log(provider)
-            addGraphicsCard(provider);
-        }
-    }
 
 
     padding: 10
     background: Rectangle {
         color: Literals.darkBackgroundColor
     }
-//    background: Rectangle{
-//        //border.color: Literals.borderColor
-//      //  border.width: Literals.borderWidth
-//        color: Literals.transparent
 
-//        Rectangle{
-//            border.color: Literals.borderColor
-//            border.width: Literals.borderWidth
-//            anchors.left: parent.left
-//            width: 1
-//            Layout.fillHeight: true
-//        }
-//        Rectangle{
-//            border.color: Literals.borderColor
-//            border.width: Literals.borderWidth
-//            anchors.right: parent.right
-//            width: 1
-//            Layout.fillHeight: true
-//        }
-
-//    }
 
 
         ScrollView {

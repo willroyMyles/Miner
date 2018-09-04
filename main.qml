@@ -3,6 +3,8 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import "subclass"
+import MinerManager 1.0
+import DataProvider 1.0
 
 ApplicationWindow {
     visible: true
@@ -12,6 +14,33 @@ ApplicationWindow {
     minimumHeight: 350
     minimumWidth: 450
     id: app
+
+    property bool startMining : false
+
+
+
+    onStartMiningChanged: {
+        if(startMining)  manager.startMining()
+        else manager.stopMining();
+    }
+
+    MinerManager{
+        id: manager
+        Component.onCompleted: {
+            manager.initialize();
+        }
+
+        onProcessCreated: {
+            console.log(provider)
+            graph_page.addGraphicsCard(provider);
+        }
+
+        onPoolUrlChanged: {settings_page.poolurl = value}
+        onPasswordChanged: {settings_page.password = value}
+        onWalletIdChanged: {settings_page.walletid = value}
+        onIdentifierChanged: {settings_page.identifier = value}
+    }
+
 
     background: Rectangle {
         color: Literals.darkBackgroundColor
@@ -88,6 +117,13 @@ ApplicationWindow {
                 z: 0
                 scale: 0.0
                 opacity: 0.0
+
+                Component.onCompleted: {
+                    poolurl = manager.getPoolUrl()
+                    password = manager.getPassword()
+                    walletid = manager.getWalletId()
+                    identifier = manager.getIdentifier()
+                }
             }
 
             GraphicsCardPage {
@@ -96,7 +132,10 @@ ApplicationWindow {
                 z: 0
                 scale: 0.0
                 opacity: 0.0
+
             }
+
+
 
             state: "graph"
 
@@ -140,7 +179,8 @@ ApplicationWindow {
                     id: startBtn
                     textValue: "Start"
                     onClicked: {
-                        graph_page.startMining = true
+                        startMining = !startMining
+                        textValue = startMining? "Stop" : "Start"
                         console.log("start button clicked")
                     }
                 }
@@ -167,7 +207,16 @@ ApplicationWindow {
                     PropertyChanges {
                         target: startBtn
                         textValue: "Confirm"
+                       onClicked:{
+                           swipe.state = "graph";
+                           bottonButtonPane.state  = "";
 
+                           manager.setWalletId(settings_page.walletid);
+                           manager.setPoolUrl(settings_page.poolurl);
+                           manager.setPassword(settings_page.password)
+                           manager.setIdentifier(settings_page.identifier)
+                           manager.saveAndApplySettings();
+                       }
                     }
 
                     PropertyChanges {
@@ -175,6 +224,7 @@ ApplicationWindow {
                         textValue: "Canel"
                         onClicked:{
                             console.log("cancel button")
+                            manager.resetSettings();
                         }
 
                     }
