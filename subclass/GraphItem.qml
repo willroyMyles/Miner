@@ -118,6 +118,38 @@ Pane {
                 color: "#11eeeeee"
                 border.width: Literals.borderWidth
                 border.color: Literals.borderColor
+
+              //  Image {
+                //    id: graphImage
+               //     anchors.fill: parent
+               //     source: "../images/graph.png"
+               //     opacity: .3
+               // }
+                Canvas{
+                    anchors.fill: parent
+                    property int xaxiscount: 5
+                          property int yaxiscount: 30
+                          property string graphAxisColor: "#22335533"
+                    onPaint: {
+                        var ctx = getContext("2d");
+                        ctx.strokeStyle = graphAxisColor
+                                  for(var i=1; i<xaxiscount+1;i++){
+                                  ctx.beginPath();
+                                  ctx.moveTo(0,i*height/xaxiscount)
+                                  ctx.lineTo(width,i*height/xaxiscount)
+                                  ctx.stroke()
+                                  }
+
+                                  for(var i=0; i<yaxiscount+1;i++){
+                                      ctx.beginPath()
+                                      ctx.moveTo(i*width/yaxiscount,0)
+                                      ctx.lineTo(i*width/yaxiscount,height)
+                                      ctx.stroke()
+                                  }
+                    }
+                }
+
+
                 //opacity: .2
             }
             MChart {
