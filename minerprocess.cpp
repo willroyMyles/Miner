@@ -263,8 +263,17 @@ Q_INVOKABLE void MinerManager::stopMining()
 {
 	for (auto card : dataProviderList) {
 		card->stopProcess();
-	}
+    }
 }
+
+void MinerManager::setShouldMining(bool val)
+{
+    for(auto pro : dataProviderList){
+        pro->setShouldMine(val);
+    }
+}
+
+
 
 bool MinerManager::initialize()
 {

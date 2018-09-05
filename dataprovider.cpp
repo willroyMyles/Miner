@@ -43,13 +43,14 @@ QStringList DataProvider::getColors() const
 
 qreal DataProvider::getAverage()
 {
-    return summation/count/summation;
+    return summation/count/maxValue_;
 }
 
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
 
 //	qDebug() << yValue;
+    auto sub =0;
 
 	if (first_run) {
         low = qRound(yValue);
@@ -62,9 +63,10 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 		emit lowChanged(low);
 	}
 
-    if(valueList.length() > 25){
-		valueList.takeFirst();
+    if(valueList.length() > chartMaxValue){
+        sub = valueList.takeFirst();
 		labelList.takeFirst();
+        count--;
     }
 
 
@@ -73,10 +75,17 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
         emit maxValueChanged(maxValue_);
     }
 
-    valueList.append(yValue);
-    labelList.append("");
 
-	summation += yValue;
+    valueList.append(yValue);
+
+    countMax++;
+    if(countMax%20==0)
+        labelList.append("");
+    else
+        labelList.append("");
+
+
+    summation += yValue - sub;
 	count++;
 	mean = summation / count;
     average = mean/maxValue_;
@@ -104,6 +113,14 @@ bool DataProvider::armed()
 Q_INVOKABLE void DataProvider::setArmed(bool value)
 {
     armed_ = value;
+
+    if(isProcessMining() && !armed())
+        stopProcess();
+    if(getShouldMine() && armed())
+        startProcess();
+
+
+    qDebug() << getShouldMine() << value;
 }
 
 QString DataProvider::time()
@@ -144,6 +161,16 @@ void DataProvider::restartProcesses()
     stopProcess();
     startProcess();
 
+}
+
+void DataProvider::setShouldMine(bool val)
+{
+    shouldMine = val;
+}
+
+bool DataProvider::getShouldMine()
+{
+ return shouldMine;
 }
 
 void DataProvider::setMinerProcess(MinerProcess *process)

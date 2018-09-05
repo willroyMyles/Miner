@@ -126,11 +126,12 @@ Pane {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 chartType: Charts.ChartType.LINE
+                chartWidth: areaChart.width
 
             fillColor: Literals.chartBackgroundColor
             labels: provider.getLabels()
             values: provider.getValues()
-            strokeColor: "#72c4e8"
+            strokeColor: "#0072c4e8"
             pointColor: "#ffffff"
 
                 chartAnimated: false

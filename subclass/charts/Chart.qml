@@ -37,12 +37,15 @@ Canvas {
   property alias chartAnimationDuration: chartAnimator.duration;
   property   int chartAnimationProgress: 0;
   property   var chartOptions: ({})
+  property  int  chartWidth: 0
 
   onPaint: {
       var ctx = canvas.getContext("2d");
       /* Reset the canvas context to allow resize events to properly redraw
          the surface with an updated window size */
       ctx.reset()
+      ctx.width = chartWidth
+
 
       switch(chartType) {
       case Charts.ChartType.BAR:

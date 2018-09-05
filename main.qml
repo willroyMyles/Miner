@@ -181,6 +181,7 @@ ApplicationWindow {
                     onClicked: {
                         startMining = !startMining
                         textValue = startMining? "Stop" : "Start"
+                        manager.setShouldMining(startMining)
                         console.log("start button clicked")
                     }
                 }
