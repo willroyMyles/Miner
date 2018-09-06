@@ -17,6 +17,13 @@ BasePage {
     property string identifier: manager.getIdentifier();
 
 
+    DataProvider{
+        id: provider
+
+        Component.onCompleted: {
+            addGraphicsCard(provider)
+        }
+    }
 
 
 
@@ -48,7 +55,7 @@ BasePage {
                 spacing:5
                 width: scrollview.width- scrollview.padding * 2
 
-           
+
 
             }
         }

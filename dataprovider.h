@@ -36,6 +36,7 @@ class DataProvider : public QObject
 		//Q_PROPERTY(bool armed READ armed WRITE setArmed NOTIFY armedChanged)
 public:
     explicit DataProvider(QObject *parent = Q_NULLPTR);
+    ~DataProvider();
 
     Q_INVOKABLE QList<qreal> getValues() const;
     Q_INVOKABLE QStringList getLabels() const;

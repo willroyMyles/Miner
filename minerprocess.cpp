@@ -9,7 +9,8 @@ and/or modify it under the terms of the GPLv3 License
 For more information see the LICENSE file
 *************************************************************************/
 
-#include <cl/cl.h>
+#include <OpenCl/cl.h>
+
 #include <QTimer>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -155,6 +156,7 @@ QList<GPU> get_cuda_devices() {
 */
 MinerManager::MinerManager( QObject *parent) :QObject(parent){
     settingsManager = new SettingsManager();
+    resetSettingsToDefault();
 }
 
 Q_INVOKABLE QString MinerManager::getWalletId() const

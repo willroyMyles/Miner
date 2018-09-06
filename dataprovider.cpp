@@ -11,6 +11,17 @@ DataProvider::DataProvider(QObject *parent) :
     valueList.append( 0.0);
     labelList.append("");
 
+    connect(this,&DataProvider::miningStopped,[this](){
+        status = "Inactive";
+    }) ;
+
+}
+
+DataProvider::~DataProvider()
+{
+    if(process){
+         if(isProcessMining())   stopProcess();
+    }
 }
 
 
@@ -178,7 +189,6 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 	this->process = process;
 	cardName = process->gpu.name;
 		emit cardNameChanged(cardName);
-	
 
 	if (process != nullptr) {
 		connect(process, &MinerProcess::onMinerChartData, [this](MinerChartData data)
@@ -217,6 +227,7 @@ void DataProvider::setMinerProcess(MinerProcess *process)
             case MinerStatus::Idle:
 				/*this->setMinerStatus(MinerConnection::Inactive);
 				displayLabel->setText("Inactive");*/
+
 				this->status = "Inactive";
 				break;
 			case MinerStatus::Starting:
