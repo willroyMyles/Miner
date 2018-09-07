@@ -44,6 +44,7 @@ Chart {
 
     property int max_value: 100// max value for y-axis
     property int step_width: 5  //number of horizontal lines
+    property int cartwidth: width
 
 
     /*!
@@ -115,9 +116,7 @@ Chart {
                        "scaleLineColor": "rgba(222,222,222,.1)",
                        "scaleShowLabels": false,
                        "scaleShowGridLines": false,
-                       "scaleSteps"//needed to override x-asix
-                       //draws 10 lines, incremented by 100
-                       : step_width,
+                       "scaleSteps": step_width,
                        "scaleStepWidth": max_value/step_width,
                        "scaleOverride": true
                    })

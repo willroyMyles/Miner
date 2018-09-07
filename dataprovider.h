@@ -36,6 +36,7 @@ class DataProvider : public QObject
 		//Q_PROPERTY(bool armed READ armed WRITE setArmed NOTIFY armedChanged)
 public:
     explicit DataProvider(QObject *parent = Q_NULLPTR);
+    ~DataProvider();
 
     Q_INVOKABLE QList<qreal> getValues() const;
     Q_INVOKABLE QStringList getLabels() const;
@@ -67,6 +68,9 @@ public:
     Q_INVOKABLE bool isProcessMining();
     void restartProcesses();
 
+    Q_INVOKABLE void setShouldMine(bool val);
+    Q_INVOKABLE bool getShouldMine();
+
 private:
     QList<qreal> valueList;// y-axis
     QStringList labelList ;//x-axis;
@@ -74,6 +78,8 @@ private:
     qreal count;
     qreal maxValue_ = 0;
 	MinerProcess* process;
+    int chartMaxValue = 120;
+    ulong countMax =0;
 
     qreal high = 10.0;
     qreal low = NULL;
@@ -85,6 +91,7 @@ private:
 	int index;
 	bool armed_ = false;
 	bool first_run = true;
+    bool shouldMine = false;
 
 	
 	friend class MinerProcess;

@@ -11,6 +11,17 @@ DataProvider::DataProvider(QObject *parent) :
     valueList.append( 0.0);
     labelList.append("");
 
+    connect(this,&DataProvider::miningStopped,[this](){
+        status = "Inactive";
+    }) ;
+
+}
+
+DataProvider::~DataProvider()
+{
+    if(process){
+         if(isProcessMining())   stopProcess();
+    }
 }
 
 
@@ -43,16 +54,16 @@ QStringList DataProvider::getColors() const
 
 qreal DataProvider::getAverage()
 {
-    return summation/count/100;
+    return summation/count/maxValue_;
 }
 
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
 
-	qDebug() << yValue;
+//	qDebug() << yValue;
+    auto sub =0;
 
 	if (first_run) {
-		qDebug() << low;
         low = qRound(yValue);
         emit lowChanged(low);
         first_run = false;
@@ -63,9 +74,10 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 		emit lowChanged(low);
 	}
 
-    if(valueList.length() > 25){
-		valueList.takeFirst();
+    if(valueList.length() > chartMaxValue){
+        sub = valueList.takeFirst();
 		labelList.takeFirst();
+        count--;
     }
 
 
@@ -74,13 +86,20 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
         emit maxValueChanged(maxValue_);
     }
 
-    valueList.append(yValue);
-    labelList.append("");
 
-	summation += yValue;
+    valueList.append(yValue);
+
+    countMax++;
+    if(countMax%20==0)
+        labelList.append("");
+    else
+        labelList.append("");
+
+
+    summation += yValue - sub;
 	count++;
 	mean = summation / count;
-    average = mean/100;
+    average = mean/maxValue_;
 
     latest = qRound(yValue);
     emit meanChanged(qRound(mean));
@@ -105,6 +124,14 @@ bool DataProvider::armed()
 Q_INVOKABLE void DataProvider::setArmed(bool value)
 {
     armed_ = value;
+
+    if(isProcessMining() && !armed())
+        stopProcess();
+    if(getShouldMine() && armed())
+        startProcess();
+
+
+    qDebug() << getShouldMine() << value;
 }
 
 QString DataProvider::time()
@@ -147,12 +174,21 @@ void DataProvider::restartProcesses()
 
 }
 
+void DataProvider::setShouldMine(bool val)
+{
+    shouldMine = val;
+}
+
+bool DataProvider::getShouldMine()
+{
+ return shouldMine;
+}
+
 void DataProvider::setMinerProcess(MinerProcess *process)
 {
 	this->process = process;
 	cardName = process->gpu.name;
 		emit cardNameChanged(cardName);
-	
 
 	if (process != nullptr) {
 		connect(process, &MinerProcess::onMinerChartData, [this](MinerChartData data)
@@ -191,6 +227,7 @@ void DataProvider::setMinerProcess(MinerProcess *process)
             case MinerStatus::Idle:
 				/*this->setMinerStatus(MinerConnection::Inactive);
 				displayLabel->setText("Inactive");*/
+
 				this->status = "Inactive";
 				break;
 			case MinerStatus::Starting:

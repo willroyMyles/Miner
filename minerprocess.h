@@ -84,6 +84,7 @@ public:
 	Q_INVOKABLE QVector<DataProvider*> dataProviderList;
 	Q_INVOKABLE void startMining();
 	Q_INVOKABLE void stopMining();
+    Q_INVOKABLE void setShouldMining(bool val);
 	Q_INVOKABLE bool initialize();
 
 

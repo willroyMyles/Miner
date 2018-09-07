@@ -67,12 +67,6 @@ Pane {
             provider.randomSeries();
             areaChart.repaint()
 
-            //average = provider.getAverage()
-//            areaChart.chartOptions = ({
-//                                                          scaleStepWidth: provider.maxValue/10,
-//                                                          pointDotRadius: 0,
-
-//                                                      })
         }
     }
 
@@ -124,6 +118,38 @@ Pane {
                 color: "#11eeeeee"
                 border.width: Literals.borderWidth
                 border.color: Literals.borderColor
+
+              //  Image {
+                //    id: graphImage
+               //     anchors.fill: parent
+               //     source: "../images/graph.png"
+               //     opacity: .3
+               // }
+                Canvas{
+                    anchors.fill: parent
+                    property int xaxiscount: 5
+                          property int yaxiscount: 30
+                          property string graphAxisColor: "#22335533"
+                    onPaint: {
+                        var ctx = getContext("2d");
+                        ctx.strokeStyle = graphAxisColor
+                                  for(var i=1; i<xaxiscount+1;i++){
+                                  ctx.beginPath();
+                                  ctx.moveTo(0,i*height/xaxiscount)
+                                  ctx.lineTo(width,i*height/xaxiscount)
+                                  ctx.stroke()
+                                  }
+
+                                  for(var i=0; i<yaxiscount+1;i++){
+                                      ctx.beginPath()
+                                      ctx.moveTo(i*width/yaxiscount,0)
+                                      ctx.lineTo(i*width/yaxiscount,height)
+                                      ctx.stroke()
+                                  }
+                    }
+                }
+
+
                 //opacity: .2
             }
             MChart {
@@ -132,11 +158,12 @@ Pane {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 chartType: Charts.ChartType.LINE
+                chartWidth: areaChart.width
 
             fillColor: Literals.chartBackgroundColor
             labels: provider.getLabels()
             values: provider.getValues()
-            strokeColor: "#72c4e8"
+            strokeColor: "#0072c4e8"
             pointColor: "#ffffff"
 
                 chartAnimated: false
@@ -166,7 +193,12 @@ Pane {
                 }
 
                 Rectangle{
-
+                   onImplicitHeightChanged: {
+                       console.log(high)
+                       console.log(average)
+                       console.log(average/high)
+                       console.warn(" \n")
+                   }
                     implicitHeight: (parent.height-Literals.borderWidth*2) * average
                     implicitWidth: 21
                     x:Literals.borderWidth
