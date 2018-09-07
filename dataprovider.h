@@ -38,6 +38,7 @@ public:
     explicit DataProvider(QObject *parent = Q_NULLPTR);
     ~DataProvider();
 
+	Q_INVOKABLE void finished();
     Q_INVOKABLE QList<qreal> getValues() const;
     Q_INVOKABLE QStringList getLabels() const;
     Q_INVOKABLE QStringList getColors() const;

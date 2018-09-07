@@ -83,7 +83,7 @@ Pane {
                 id: hashLegend
 
                 //  anchors.fill: parent
-                Layout.leftMargin: cg.width - hashLayout.width + 18+padding + avg.width
+                Layout.leftMargin: cg.width - hashLayout.width - 10
                 Layout.topMargin: -40
 
                 RowLayout {
@@ -101,21 +101,6 @@ Pane {
                         color: Literals.fontcolor
                         font.weight: Literals.fontWeight
                         font.pixelSize: Qt.application.font.pixelSize * 1.2
-                    }
-
-                    Item {
-                        width: 20
-                    }
-
-                    Label {
-                        id: avg
-                        text: "Avg"
-                        horizontalAlignment: Text.AlignHCenter
-                        color: Literals.fontcolor
-                        Layout.preferredWidth: averageBar.width
-                   //     Layout.topMargin: -height - (height / 3)
-                        font.weight: Literals.fontWeight
-                        font.pixelSize: Qt.application.font.pixelSize * 1
                     }
 
                 }
@@ -170,6 +155,21 @@ Pane {
             id: colL
             spacing: 0
 
+		
+
+                    Label {
+
+					Layout.topMargin : -height-15
+
+                        id: avg
+                        text: "Avg"
+                        horizontalAlignment: Text.AlignHCenter
+                        color: Literals.fontcolor
+                        Layout.preferredWidth: averageBar.width
+                   //     Layout.topMargin: -height - (height / 3)
+                        font.weight: Literals.fontWeight
+                        font.pixelSize: Qt.application.font.pixelSize * 1
+                    }
 
             Rectangle {
                 id: averageBar

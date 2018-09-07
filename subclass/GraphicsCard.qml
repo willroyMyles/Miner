@@ -22,6 +22,10 @@ Page {
         graph.provider = provider
     }
 
+    Component.onDestruction: {
+        provider.finished()
+    }
+
     padding: 15
     topPadding: 10
     Layout.fillWidth: true

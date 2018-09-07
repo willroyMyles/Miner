@@ -10,6 +10,7 @@ DataProvider::DataProvider(QObject *parent) :
 {
     valueList.append( 0.0);
     labelList.append("");
+	process = nullptr;
 
     connect(this,&DataProvider::miningStopped,[this](){
         status = "Inactive";
@@ -19,11 +20,17 @@ DataProvider::DataProvider(QObject *parent) :
 
 DataProvider::~DataProvider()
 {
-    if(process){
-         if(isProcessMining())   stopProcess();
-    }
+	
 }
 
+
+Q_INVOKABLE void DataProvider::finished()
+{
+	qDebug() << "called";
+	if (process) {
+		if (isProcessMining())   stopProcess();
+	}
+}
 
 QList<qreal> DataProvider::getValues() const
 {

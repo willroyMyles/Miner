@@ -170,12 +170,29 @@ Pane {
             var min = 0
             var max = control.max * control.xAxisMaxMultiplier
             var diff = max - min
+			var xIncr = width/100
 
-            for (var i = 0; i < list.length; i++) {
-                var d1 = list[i]
+            for (var i = 1; i < list.length; i++) {
+             //   var d1 = list[i]
                 var x1 = i * width / (numOfValues + 1)
-                var y1 = (1.0 - d1 / max) * height
-                ctx.lineTo(x1, y1)
+             //   var y1 = (1.0 - d1 / max) * height
+             //   ctx.lineTo(x1, y1)
+
+
+
+				var d1 = list[i - 1];
+				var d2 = list[i];
+
+				var yr = 1.0 - ((d1 - min) / max);
+				var y1 =  yr * height;
+
+				yr = 1.0 - ((d2 - min) / max);
+				var y2 = yr * height;
+
+				ctx.lineTo(x1,y2)
+
+
+
             }
 
             ctx.stroke()

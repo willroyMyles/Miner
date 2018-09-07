@@ -17,13 +17,7 @@ BasePage {
     property string identifier: manager.getIdentifier();
 
 
-    DataProvider{
-        id: provider
-
-        Component.onCompleted: {
-            addGraphicsCard(provider)
-        }
-    }
+ 
 
 
 
