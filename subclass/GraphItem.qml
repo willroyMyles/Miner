@@ -10,15 +10,15 @@ import "charts"
 import "charts/Chart.js" as Charts
 
 Pane {
+    id: pane
     property int myIndex: 0
 
-    //property QtObject dataprovder: 0
     property DataProvider provider: null
 
     onProviderChanged: {
-        console.log(provider)
+        console.log(provider, "graph item")
+        cg.provider = provider
     }
-
 
     property real average: provider.getAverage()
     property string cardname: provider.getCardName()
@@ -27,28 +27,43 @@ Pane {
     property real low: provider.getLow()
     property double mean: provider.getMean()
     property real latest: provider.getLatest()
-    property bool armed: provider.armed();
+    property bool armed: provider.armed()
     property string currentTime: ""
 
-    function getCurrentTime(){
-        currentTime = provider.time();
+    function getCurrentTime() {
+        currentTime = provider.time()
     }
 
-    Connections{
-        target : provider
-        onMaxValueChanged: {  high = value   }
-        onCardNameChanged: {  cardname = value }
-        onLatestChanged: { latest = value }
-        onLowChanged: {low = value}
-        onStatusChanged: {status = value }
-        onMeanChanged: {mean = value}
-        onDataAdded: {
-            getCurrentTime();
-            areaChart.labels= provider.getLabels()
-            areaChart.values= provider.getValues()
+    Connections {
+        target: provider
+        onMaxValueChanged: {
+            high = value
         }
-        onArmedChanged:{ armed = value}
-        onAverageChanged: {average = value}
+        onCardNameChanged: {
+            cardname = value
+        }
+        onLatestChanged: {
+            latest = value
+        }
+        onLowChanged: {
+            low = value
+        }
+        onStatusChanged: {
+            status = value
+        }
+        onMeanChanged: {
+            mean = value
+        }
+        onDataAdded: {
+            getCurrentTime()
+            //  cg.reDraw()
+        }
+        onArmedChanged: {
+            armed = value
+        }
+        onAverageChanged: {
+            average = value
+        }
     }
 
     Layout.fillHeight: true
@@ -59,17 +74,6 @@ Pane {
     }
     smooth: true
 
-    MouseArea {
-        anchors.fill: parent
-        id: area
-
-        onClicked: {
-            provider.randomSeries();
-            areaChart.repaint()
-
-        }
-    }
-
     RowLayout {
         anchors.fill: parent
 
@@ -78,15 +82,15 @@ Pane {
             Rectangle {
                 id: hashLegend
 
-              //  anchors.fill: parent
-                Layout.leftMargin: areaChart.width - hashLayout.width
+                //  anchors.fill: parent
+                Layout.leftMargin: cg.width - hashLayout.width + 18+padding + avg.width
                 Layout.topMargin: -40
 
                 RowLayout {
                     id: hashLayout
                     Rectangle {
                         implicitHeight: 15
-                        implicitWidth: implicitHeight+3
+                        implicitWidth: implicitHeight + 3
                         border.width: 2
                         border.color: Literals.buttonColorHovered
                         color: Literals.chartBackgroundColor
@@ -97,93 +101,84 @@ Pane {
                         color: Literals.fontcolor
                         font.weight: Literals.fontWeight
                         font.pixelSize: Qt.application.font.pixelSize * 1.2
-
                     }
+
+                    Item {
+                        width: 20
+                    }
+
+                    Label {
+                        id: avg
+                        text: "Avg"
+                        horizontalAlignment: Text.AlignHCenter
+                        color: Literals.fontcolor
+                        Layout.preferredWidth: averageBar.width
+                   //     Layout.topMargin: -height - (height / 3)
+                        font.weight: Literals.fontWeight
+                        font.pixelSize: Qt.application.font.pixelSize * 1
+                    }
+
                 }
             }
 
-            Rectangle {
-                id: graphBackground
-                //grapg background rectangle
-                anchors {
-                    left: areaChart.left
-                    right: areaChart.right
-                    top: areaChart.top
-                    bottom: areaChart.bottom
-                    leftMargin: 0
-                    rightMargin: 0
-                    topMargin: 0
-                    bottomMargin: 20
-                }
-                color: "#11eeeeee"
-                border.width: Literals.borderWidth
-                border.color: Literals.borderColor
-
-              //  Image {
-                //    id: graphImage
-               //     anchors.fill: parent
-               //     source: "../images/graph.png"
-               //     opacity: .3
-               // }
-                Canvas{
-                    anchors.fill: parent
-                    property int xaxiscount: 5
-                          property int yaxiscount: 30
-                          property string graphAxisColor: "#22335533"
-                    onPaint: {
-                        var ctx = getContext("2d");
-                        ctx.strokeStyle = graphAxisColor
-                                  for(var i=1; i<xaxiscount+1;i++){
-                                  ctx.beginPath();
-                                  ctx.moveTo(0,i*height/xaxiscount)
-                                  ctx.lineTo(width,i*height/xaxiscount)
-                                  ctx.stroke()
-                                  }
-
-                                  for(var i=0; i<yaxiscount+1;i++){
-                                      ctx.beginPath()
-                                      ctx.moveTo(i*width/yaxiscount,0)
-                                      ctx.lineTo(i*width/yaxiscount,height)
-                                      ctx.stroke()
-                                  }
-                    }
-                }
-
-
-                //opacity: .2
+            Item {
+                width: 20
             }
-            MChart {
-                id: areaChart
 
-                Layout.fillWidth: true
+            CustomGraph {
+                id: cg
+                provider: provider
                 Layout.fillHeight: true
-                chartType: Charts.ChartType.LINE
-                chartWidth: areaChart.width
+                Layout.fillWidth: true
 
-            fillColor: Literals.chartBackgroundColor
-            labels: provider.getLabels()
-            values: provider.getValues()
-            strokeColor: "#0072c4e8"
-            pointColor: "#ffffff"
-
-                chartAnimated: false
-
-                onValuesChanged: {
-                    requestPaint()
-                }
+                numOfValues: provider.chartMaxAmount()
+                //  graphAxisColor: "#99000000"
+                //  graphFillColor: "#99000000"
+                //  graphLineColor: "#99000000"
+                max: high
+                xAxisMaxMultiplier: 2
+                skipgraph: false
+                backgroundColor: "#777"
             }
+
+            //            MChart {
+            //                id: areaChart
+
+            //                Layout.fillWidth: true
+            //                Layout.fillHeight: true
+            //                chartType: Charts.ChartType.LINE
+            //                chartWidth: areaChart.width
+
+            //            fillColor: Literals.chartBackgroundColor
+            //            labels: provider.getLabels()
+            //            values: provider.getValues()
+            //            strokeColor: "#0072c4e8"
+            //            pointColor: "#ffffff"
+
+            //                chartAnimated: false
+
+            //                onValuesChanged: {
+            //                    requestPaint()
+            //                }
+            //            }
         }
         Item {
             width: 20
         }
 
         ColumnLayout {
+            id: colL
+            spacing: 0
+
+
             Rectangle {
                 id: averageBar
                 border.color: Literals.borderColor
                 border.width: Literals.borderWidth
                 implicitWidth: 25
-                implicitHeight: graphBackground.height
+                Layout.fillHeight: true
+                // Layout.topMargin: 20
+                implicitHeight: +avg.height
 
                 color: "#11eeeeee"
                 rotation: 180
@@ -192,41 +187,24 @@ Pane {
 
                 }
 
-                Rectangle{
-                   onImplicitHeightChanged: {
-                       console.log(high)
-                       console.log(average)
-                       console.log(average/high)
-                       console.warn(" \n")
-                   }
-                    implicitHeight: (parent.height-Literals.borderWidth*2) * average
-                    implicitWidth: 21
-                    x:Literals.borderWidth
-                    y:Literals.borderWidth
+                Rectangle {
+                    onImplicitHeightChanged: {
 
-                    anchors{
-                       // centerIn: parent
+                    }
+                    implicitHeight: (parent.height - Literals.borderWidth * 2) * average / 2
+                    implicitWidth: 21
+                    x: Literals.borderWidth
+                    y: Literals.borderWidth
+
+                    anchors {
+                        // centerIn: parent
                         bottomMargin: 0
                     }
 
                     color: Literals.blueButtonColor
                     //anchors.fill: parent
-
-
                 }
-            }
-
-            Label {
-                id: avg
-                text: "Avg"
-                horizontalAlignment: Text.AlignHCenter
-                color: Literals.fontcolor
-                Layout.preferredWidth: averageBar.width
-
             }
         }
     }
-    //        Component.onCompleted: {
-    //            chartData = [4,6,3,6,9,4,9,3,6]
-    //        }
 }

@@ -18,7 +18,7 @@ Page {
 
 
     Component.onCompleted: {
-        console.log(provider)
+        console.log(provider, "graphocscard")
         graph.provider = provider
     }
 

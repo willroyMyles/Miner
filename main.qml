@@ -31,7 +31,7 @@ ApplicationWindow {
         }
 
         onProcessCreated: {
-            console.log(provider)
+            console.log(provider, "mainpage")
             graph_page.addGraphicsCard(provider);
         }
 
@@ -182,7 +182,6 @@ ApplicationWindow {
                         startMining = !startMining
                         textValue = startMining? "Stop" : "Start"
                         manager.setShouldMining(startMining)
-                        console.log("start button clicked")
                     }
                 }
                 Label {
@@ -197,7 +196,6 @@ ApplicationWindow {
                     id: helpBtn
                     textValue: "Help"
                     onClicked: {
-                        console.log("help button")
                     }
                 }
             }
@@ -224,7 +222,6 @@ ApplicationWindow {
                         target: helpBtn
                         textValue: "Canel"
                         onClicked:{
-                            console.log("cancel button")
                             manager.resetSettings();
                         }
 

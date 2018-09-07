@@ -67,10 +67,18 @@ BasePage {
             //create cards and pass info
             comp = Qt.createComponent("subclass/GraphicsCard.qml")
 
-            if (comp.status == Component.Ready)
+            if (comp.status == Component.Ready){
                 card = comp.createObject(col,{"cardIndex":provider.getIndex(), "provider" : provider })
-            else
-                comp.statusChanged.connect( card = comp.createObject(col,{"cardName" : "createdCard"}));
+            }
+            else{
+                comp.statusChanged.connect(  createGraphicsCard(provider, comp));
+            }
+
+        }
+
+        function createGraphicsCard(provider, comp){
+            var card
+            card = comp.createObject(col,{"cardIndex":provider.getIndex(), "provider" : provider })
 
         }
 

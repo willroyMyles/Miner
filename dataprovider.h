@@ -70,7 +70,7 @@ public:
 
     Q_INVOKABLE void setShouldMine(bool val);
     Q_INVOKABLE bool getShouldMine();
-
+    Q_INVOKABLE  int chartMaxAmount(){return chartMaxValue;}
 private:
     QList<qreal> valueList;// y-axis
     QStringList labelList ;//x-axis;
@@ -78,8 +78,9 @@ private:
     qreal count;
     qreal maxValue_ = 0;
 	MinerProcess* process;
-    int chartMaxValue = 120;
     ulong countMax =0;
+    int chartMaxValue = 120;
+
 
     qreal high = 10.0;
     qreal low = NULL;

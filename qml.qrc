@@ -23,5 +23,6 @@
         <file>SettingsPage.qml</file>
         <file>subclass/SettingsNode.qml</file>
         <file>subclass/BasePage.qml</file>
+        <file>subclass/CustomGraph.qml</file>
     </qresource>
 </RCC>
