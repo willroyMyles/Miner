@@ -38,6 +38,7 @@ public:
     explicit DataProvider(QObject *parent = Q_NULLPTR);
     ~DataProvider();
 
+	Q_INVOKABLE void finished();
     Q_INVOKABLE QList<qreal> getValues() const;
     Q_INVOKABLE QStringList getLabels() const;
     Q_INVOKABLE QStringList getColors() const;
@@ -70,19 +71,20 @@ public:
 
     Q_INVOKABLE void setShouldMine(bool val);
     Q_INVOKABLE bool getShouldMine();
-
+    Q_INVOKABLE  int chartMaxAmount(){return chartMaxValue;}
 private:
     QList<qreal> valueList;// y-axis
     QStringList labelList ;//x-axis;
     qreal summation;
     qreal count;
-    qreal maxValue_ = 0;
+    qreal maxValue_ = 0.00;
 	MinerProcess* process;
-    int chartMaxValue = 120;
     ulong countMax =0;
+    int chartMaxValue = 120;
+
 
     qreal high = 10.0;
-    qreal low = NULL;
+    qreal low = 0.0;
     qreal mean = 0.5;
     qreal latest = 0.0;
     qreal average = 0.0;
@@ -93,7 +95,7 @@ private:
 	bool first_run = true;
     bool shouldMine = false;
 
-	
+	void checkMinMax();
 	friend class MinerProcess;
 
 signals:

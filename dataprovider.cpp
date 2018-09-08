@@ -8,8 +8,8 @@
 DataProvider::DataProvider(QObject *parent) :
     QObject(parent),summation(0),count(0)
 {
-    valueList.append( 0.0);
-    labelList.append("");
+  
+	process = nullptr;
 
     connect(this,&DataProvider::miningStopped,[this](){
         status = "Inactive";
@@ -19,11 +19,17 @@ DataProvider::DataProvider(QObject *parent) :
 
 DataProvider::~DataProvider()
 {
-    if(process){
-         if(isProcessMining())   stopProcess();
-    }
+	
 }
 
+
+Q_INVOKABLE void DataProvider::finished()
+{
+	qDebug() << "called";
+	if (process) {
+		 stopProcess();
+	}
+}
 
 QList<qreal> DataProvider::getValues() const
 {
@@ -60,59 +66,46 @@ qreal DataProvider::getAverage()
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
 
-//	qDebug() << yValue;
-    auto sub =0;
+	auto num = QString::number(yValue, 'f', 2).toDouble();
+	qDebug() << num;
 
-	if (first_run) {
-        low = qRound(yValue);
-        emit lowChanged(low);
-        first_run = false;
-	}
-
-	if (low > yValue) {
-        low = qRound(yValue);
-		emit lowChanged(low);
-	}
+	if (first_run && num <= 0.00) return;
+	
+    double sub =0;
 
     if(valueList.length() > chartMaxValue){
         sub = valueList.takeFirst();
-		labelList.takeFirst();
+	//	labelList.takeFirst();
         count--;
     }
 
+	valueList.append(num);
 
-    if(yValue> maxValue_){
-        maxValue_ = qRound(yValue);
-        emit maxValueChanged(maxValue_);
-    }
-
-
-    valueList.append(yValue);
+	checkMinMax();
 
     countMax++;
-    if(countMax%20==0)
-        labelList.append("");
-    else
-        labelList.append("");
 
-
-    summation += yValue - sub;
+    summation += num - sub;
 	count++;
-	mean = summation / count;
-    average = mean/maxValue_;
+	mean = QString::number((summation / count), 'f', 2).toDouble();
+    average = QString::number((mean / maxValue_), 'f', 2).toDouble();
 
-    latest = qRound(yValue);
-    emit meanChanged(qRound(mean));
+    latest = num;
+    emit meanChanged(mean);
     emit averageChanged(average);
     emit latestChanged(latest);
     emit dataAdded();
+	first_run = false;
 }
 
 void DataProvider::randomSeries()
 {
+    int l= 3;
 
-    auto value = qreal(qrand()%100);
-    addToSeries(value);
+    if(countMax > 100) l = 100;
+    float r2 = static_cast <float>( (rand()) % l);
+   // auto value = float(qrand()%100);
+    addToSeries(r2);
 
 }
 
@@ -155,6 +148,8 @@ Q_INVOKABLE void DataProvider::startProcess()
 
 Q_INVOKABLE void DataProvider::stopProcess()
 {
+	qDebug() << "called";
+
 	if (this->process->isMining()) {
 		this->process->stopMining();
 		//emit this->miningStopped();
@@ -247,9 +242,6 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 
 				break;
 			}
-
-
-
 			emit statusChanged(this->status);
 
 		});
@@ -298,3 +290,22 @@ Q_INVOKABLE DataProvider * DataProvider::getProvide()
 {
 	return this;
 }
+
+void DataProvider::checkMinMax() 
+{
+	double valLow = *std::min_element(valueList.begin(), valueList.end());
+	double valHigh = *std::max_element(valueList.begin(), valueList.end());
+
+	valLow = QString::number(valLow, 'f', 2).toDouble();
+	valHigh = QString::number(valHigh, 'f', 2).toDouble();
+
+
+		low = valLow;
+		emit lowChanged(low);
+
+		maxValue_ = valHigh;
+		emit maxValueChanged(maxValue_);
+	
+
+}
+
