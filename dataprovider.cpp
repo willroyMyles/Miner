@@ -66,7 +66,10 @@ qreal DataProvider::getAverage()
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
 
-	if (first_run && yValue == 0) return;
+	auto num = QString::number(yValue, 'f', 2).toDouble();
+	qDebug() << num;
+
+	if (first_run && num <= 0) return;
 	
 	auto sub =0;
 
@@ -77,17 +80,17 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
     }
 
 	checkMinMax();
-    valueList.append(yValue);
+    valueList.append(num);
 
     countMax++;
 
-    summation += yValue - sub;
+    summation += num - sub;
 	count++;
-	mean = summation / count;
-    average = mean/maxValue_;
+	mean = QString::number((summation / count), 'f', 2).toDouble();
+    average = QString::number((mean / maxValue_), 'f', 2).toDouble();
 
-    latest = qRound(yValue);
-    emit meanChanged(qRound(mean));
+    latest = num;
+    emit meanChanged(mean);
     emit averageChanged(average);
     emit latestChanged(latest);
     emit dataAdded();
@@ -95,9 +98,9 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 
 void DataProvider::randomSeries()
 {
-
-    auto value = qreal(qrand()%100);
-    addToSeries(value);
+	float r2 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX % 100));
+   // auto value = float(qrand()%100);
+    addToSeries(r2);
 
 }
 
@@ -287,7 +290,11 @@ void DataProvider::checkMinMax()
 {
 	double valLow = *std::min_element(valueList.begin(), valueList.end());
 	double valHigh = *std::max_element(valueList.begin(), valueList.end());
-	if (low > valLow && valLow!=0) {
+
+	valLow = QString::number(valLow, 'f', 2).toDouble();
+	valHigh = QString::number(valHigh, 'f', 2).toDouble();
+
+	if (low > valLow) {
 		low = valLow;
 		emit lowChanged(low);
 	}

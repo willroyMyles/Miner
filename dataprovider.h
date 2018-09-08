@@ -77,7 +77,7 @@ private:
     QStringList labelList ;//x-axis;
     qreal summation;
     qreal count;
-    qreal maxValue_ = 0;
+    qreal maxValue_ = 0.00;
 	MinerProcess* process;
     ulong countMax =0;
     int chartMaxValue = 120;
