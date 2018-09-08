@@ -84,7 +84,7 @@ private:
 
 
     qreal high = 10.0;
-    qreal low = NULL;
+    qreal low = INT32_MAX;
     qreal mean = 0.5;
     qreal latest = 0.0;
     qreal average = 0.0;
@@ -95,7 +95,7 @@ private:
 	bool first_run = true;
     bool shouldMine = false;
 
-	
+	void checkMinMax();
 	friend class MinerProcess;
 
 signals:

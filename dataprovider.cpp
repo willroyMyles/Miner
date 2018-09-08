@@ -8,8 +8,7 @@
 DataProvider::DataProvider(QObject *parent) :
     QObject(parent),summation(0),count(0)
 {
-    valueList.append( 0.0);
-    labelList.append("");
+  
 	process = nullptr;
 
     connect(this,&DataProvider::miningStopped,[this](){
@@ -28,7 +27,7 @@ Q_INVOKABLE void DataProvider::finished()
 {
 	qDebug() << "called";
 	if (process) {
-		if (isProcessMining())   stopProcess();
+		 stopProcess();
 	}
 }
 
@@ -67,41 +66,20 @@ qreal DataProvider::getAverage()
 void DataProvider::addToSeries(qreal yValue, QString xValue)
 {
 
-//	qDebug() << yValue;
-    auto sub =0;
-
-	if (first_run) {
-        low = qRound(yValue);
-        emit lowChanged(low);
-        first_run = false;
-	}
-
-	if (low > yValue) {
-        low = qRound(yValue);
-		emit lowChanged(low);
-	}
+	if (first_run && yValue == 0) return;
+	
+	auto sub =0;
 
     if(valueList.length() > chartMaxValue){
         sub = valueList.takeFirst();
-		labelList.takeFirst();
+	//	labelList.takeFirst();
         count--;
     }
 
-
-    if(yValue> maxValue_){
-        maxValue_ = qRound(yValue);
-        emit maxValueChanged(maxValue_);
-    }
-
-
+	checkMinMax();
     valueList.append(yValue);
 
     countMax++;
-    if(countMax%20==0)
-        labelList.append("");
-    else
-        labelList.append("");
-
 
     summation += yValue - sub;
 	count++;
@@ -162,6 +140,8 @@ Q_INVOKABLE void DataProvider::startProcess()
 
 Q_INVOKABLE void DataProvider::stopProcess()
 {
+	qDebug() << "called";
+
 	if (this->process->isMining()) {
 		this->process->stopMining();
 		//emit this->miningStopped();
@@ -254,9 +234,6 @@ void DataProvider::setMinerProcess(MinerProcess *process)
 
 				break;
 			}
-
-
-
 			emit statusChanged(this->status);
 
 		});
@@ -305,3 +282,20 @@ Q_INVOKABLE DataProvider * DataProvider::getProvide()
 {
 	return this;
 }
+
+void DataProvider::checkMinMax() 
+{
+	double valLow = *std::min_element(valueList.begin(), valueList.end());
+	double valHigh = *std::max_element(valueList.begin(), valueList.end());
+	if (low > valLow && valLow!=0) {
+		low = valLow;
+		emit lowChanged(low);
+	}
+
+	if (maxValue_ < valHigh) {
+		maxValue_ = valHigh;
+		emit maxValueChanged(maxValue_);
+	}
+
+}
+

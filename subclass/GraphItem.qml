@@ -37,6 +37,7 @@ Pane {
     Connections {
         target: provider
         onMaxValueChanged: {
+            getCurrentTime()
             high = value
         }
         onCardNameChanged: {
@@ -46,6 +47,7 @@ Pane {
             latest = value
         }
         onLowChanged: {
+            getCurrentTime()
             low = value
         }
         onStatusChanged: {
@@ -56,7 +58,6 @@ Pane {
         }
         onDataAdded: {
             getCurrentTime()
-            //  cg.reDraw()
         }
         onArmedChanged: {
             armed = value
