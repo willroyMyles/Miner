@@ -95,6 +95,7 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
     emit averageChanged(average);
     emit latestChanged(latest);
     emit dataAdded();
+	first_run = false;
 }
 
 void DataProvider::randomSeries()
@@ -298,15 +299,13 @@ void DataProvider::checkMinMax()
 	valLow = QString::number(valLow, 'f', 2).toDouble();
 	valHigh = QString::number(valHigh, 'f', 2).toDouble();
 
-	if (low > valLow) {
+
 		low = valLow;
 		emit lowChanged(low);
-	}
 
-	if (maxValue_ < valHigh) {
 		maxValue_ = valHigh;
 		emit maxValueChanged(maxValue_);
-	}
+	
 
 }
 

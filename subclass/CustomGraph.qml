@@ -155,7 +155,7 @@ Pane {
                 ctx.lineTo(i * width / yaxiscount-animate, height)
                 ctx.stroke()
             }
-            animate++;
+            animate+= 3;
             console.log(width/yaxiscount, animate)
             if(animate>=(width/yaxiscount)) animate =0;
             //    skipgraph = true;
@@ -166,19 +166,22 @@ Pane {
             ctx.strokeStyle = "#222"
             ctx.moveTo(0, height)
 
+            var ytop = height/2
+            var ybottom = height-20
+            var ydiff = ytop - ybottom;
             var min = provider.getLow()
-            var max = provider.getHigh() * control.xAxisMaxMultiplier
+            var max = provider.getHigh() //* control.xAxisMaxMultiplier
             var diff = max - min
             if(diff <3) diff = 3;
 
-            for (var i = 1; i < list.length; i++) {
+            for (var i = 0; i < list.length; i++) {
                 var d1 = list[i]
                 var x1 = i * width / (numOfValues + 1)
              //   var y1 = (1.0 - d1 / max) * height
              //   ctx.lineTo(x1, y1)
 
                 var yr = 1.0 - ((d1 - min) / diff);
-                var y1 = yr * height;
+                var y1 =ybottom + yr * ydiff;
 
                 ctx.lineTo(x1,y1)
 

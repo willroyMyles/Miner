@@ -84,7 +84,7 @@ private:
 
 
     qreal high = 10.0;
-    qreal low = INT32_MAX;
+    qreal low = 0.0;
     qreal mean = 0.5;
     qreal latest = 0.0;
     qreal average = 0.0;
