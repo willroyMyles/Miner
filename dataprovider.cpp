@@ -69,9 +69,9 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 	auto num = QString::number(yValue, 'f', 2).toDouble();
 	qDebug() << num;
 
-	if (first_run && num <= 0) return;
+	if (first_run && num <= 0.00) return;
 	
-	auto sub =0;
+    double sub =0;
 
     if(valueList.length() > chartMaxValue){
         sub = valueList.takeFirst();
@@ -79,8 +79,9 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
         count--;
     }
 
+	valueList.append(num);
+
 	checkMinMax();
-    valueList.append(num);
 
     countMax++;
 
@@ -98,7 +99,10 @@ void DataProvider::addToSeries(qreal yValue, QString xValue)
 
 void DataProvider::randomSeries()
 {
-	float r2 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX % 100));
+    int l= 3;
+
+    if(countMax > 100) l = 100;
+    float r2 = static_cast <float>( (rand()) % l);
    // auto value = float(qrand()%100);
     addToSeries(r2);
 

@@ -15,6 +15,14 @@ BasePage {
     property string poolurl: manager.getPoolUrl();
     property string password: manager.getPassword();
     property string identifier: manager.getIdentifier();
+    DataProvider{
+        id: pro
+
+        Component.onCompleted: {
+            addGraphicsCard(pro)
+        }
+    }
+
 
 
  
