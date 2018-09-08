@@ -8,13 +8,6 @@ Label {
     property string textValue: ""
     property real opacityValue: 0.95
 
-    onTextChanged: {
-        while(latest.width > parent.width){
-            textMetrics.font.pixelSize--;
-			console.log(latest.width, parent.width)
-        }
-    }
-
     TextMetrics{
         id: textMetrics
         font.weight: Literals.fontWeight

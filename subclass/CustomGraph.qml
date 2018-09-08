@@ -10,7 +10,7 @@ Pane {
     property int xaxiscount: 8
     property int yaxiscount: 15
     property int numOfValues: 0
-    property string graphAxisColor: "#11000000"
+    property string graphAxisColor: "#22000000"
     property string graphFillColor: "#99000000"
     property string graphLineColor: "#99000000"
     property int max: 0
@@ -18,6 +18,7 @@ Pane {
     property bool skipgraph: false
     property string backgroundColor: "#777"
     property DataProvider provider: null
+    property int animate: 0
 
 
     padding: 0
@@ -138,7 +139,6 @@ Pane {
         function drawGrid() {
             var ctx = canvas.getContext("2d")
 
-            ctx.shadowBlur = 0
             ctx.lineJoin = "round"
             ctx.lineCap = "round"
             ctx.strokeStyle = graphAxisColor
@@ -151,10 +151,13 @@ Pane {
 
             for (var i = 0; i < yaxiscount + 1; i++) {
                 ctx.beginPath()
-                ctx.moveTo(i * width / yaxiscount, 0)
-                ctx.lineTo(i * width / yaxiscount, height)
+                ctx.moveTo(i * width / yaxiscount-animate, 0)
+                ctx.lineTo(i * width / yaxiscount-animate, height)
                 ctx.stroke()
             }
+            animate++;
+            console.log(width/yaxiscount, animate)
+            if(animate>=(width/yaxiscount)) animate =0;
             //    skipgraph = true;
         }
         function drawPoints(list) {
@@ -162,10 +165,6 @@ Pane {
 
             ctx.strokeStyle = "#222"
             ctx.moveTo(0, height)
-            ctx.shadowBlur = .5
-            ctx.shadowOffsetX = 5
-            ctx.shadowOffsetY = 9
-            ctx.shadowColor = "#888"
 
             var min = provider.getLow()
             var max = provider.getHigh() * control.xAxisMaxMultiplier
@@ -177,9 +176,6 @@ Pane {
                 var x1 = i * width / (numOfValues + 1)
              //   var y1 = (1.0 - d1 / max) * height
              //   ctx.lineTo(x1, y1)
-
-
-
 
                 var yr = 1.0 - ((d1 - min) / diff);
                 var y1 = yr * height;
