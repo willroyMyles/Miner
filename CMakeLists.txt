@@ -64,6 +64,9 @@ if(WIN32 AND MSVC)
     set(USE_MSVC_RUNTIME_LIBRARY_DLL 1)
 endif()
 
+option (BUILD_MINER_AS_LIB "if the miner is in jahshaka")
+
+
 set(HEADERS 
 	cuda_gpu_list.h
 	dataprovider.h
@@ -83,11 +86,21 @@ set(SRCS
 qt5_add_resources(QRCS
 	qml.qrc)
 
-add_executable(${PROJECT_NAME} WIN32 ${QRCS} ${SRCS} ${HEADERS})
+if(BUILD_MINER_AS_LIB)
+    add_library(${PROJECT_NAME} ${HEADERS_moc} ${SRCS} ${QRCS})
 
-if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL Release)
-        set(CMAKE_WIN32_EXECUTABLE ON)
-endif()
+else()
+    add_executable(${PROJECT_NAME} WIN32 ${QRCS} ${SRCS} ${HEADERS})
+
+    if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL Release)
+            set(CMAKE_WIN32_EXECUTABLE ON)
+    endif()
+
+endif(BUILD_MINER_AS_LIB)
+
+if(BUILD_MINER_AS_LIB)
+    add_definitions("-DBUILD_AS_LIB")
+endif(BUILD_MINER_AS_LIB)
 
 #XMR-STAK
     #set(OpenSSL_ENABLE OFF)
@@ -118,11 +131,11 @@ endif(MSVC)
 
 
 
-target_link_libraries(Miner Qt5::Widgets Qt5::Network Qt5::Qml Qt5::Quick)
-target_link_libraries(Miner ${LIBS})
-target_compile_options(Miner PUBLIC)
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Network Qt5::Qml Qt5::Quick)
+target_link_libraries(${PROJECT_NAME} ${LIBS})
+target_compile_options(${PROJECT_NAME} PUBLIC)
 
-if (WIN32)
+if (WIN32 AND !BUILD_MINER_AS_LIB)
     get_target_property(QT5_QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
     get_filename_component(QT5_WINDEPLOYQT_EXECUTABLE ${QT5_QMAKE_EXECUTABLE} PATH)
     set(QT5_WINDEPLOYQT_EXECUTABLE "${QT5_WINDEPLOYQT_EXECUTABLE}/windeployqt.exe")
