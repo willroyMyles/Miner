@@ -1,12 +1,12 @@
-#ifndef LITERALS_H
-#define LITERALS_H
+#ifndef LITERAL_H
+#define LITERAL_H
 
 #include <QColor>
 #include <QObject>
 #include <QVariant>
 
-
-class Literals : public QObject{
+class Literal : public QObject
+{
     Q_OBJECT
     Q_PROPERTY(QVariant fontWeight READ fontWeight CONSTANT)
     Q_PROPERTY(QVariant fontWeightLighter READ fontWeightLighter CONSTANT)
@@ -33,9 +33,8 @@ class Literals : public QObject{
 
 
 public:
-//    explicit Literals(QObject *parent = Q_NULLPTR): QObject(parent){
+    explicit Literal(QObject *parent = nullptr);
 
-//    }
     Q_INVOKABLE QVariant fontWeight(){return 65;}
     Q_INVOKABLE QVariant fontWeightLighter(){return 50;}
     Q_INVOKABLE QVariant fontWeightLarger(){return 85;}
@@ -56,7 +55,9 @@ public:
     Q_INVOKABLE QVariant animationLengthShort(){return   150  ;}
     Q_INVOKABLE QVariant animationLengthMedium(){return   500  ;}
     Q_INVOKABLE QVariant animationLengthLong(){return   750 ;}
+signals:
+
+public slots:
 };
 
-
-#endif // LITERALS_H
+#endif // LITERAL_H

@@ -73,14 +73,20 @@ set(HEADERS
 	literals.h
 	minerProcess.h
         constants.h
-        settingsmanager.h)
+        settingsmanager.h
+        minerfrontend.h
+        literal.h
+        )
 set(SRCS
 	dataprovider.cpp
 	main.cpp
 	minerprocess.cpp
 	constants.cpp
         settingsmanager.cpp
-	cuda_gpu_list.cu)
+        cuda_gpu_list.cu
+        minerfrontend.cpp
+        literal.cpp
+        )
 
 
 qt5_add_resources(QRCS
@@ -141,9 +147,9 @@ if (WIN32 AND !BUILD_MINER_AS_LIB)
     set(QT5_WINDEPLOYQT_EXECUTABLE "${QT5_WINDEPLOYQT_EXECUTABLE}/windeployqt.exe")
 
 
-    add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-        COMMAND ${QT5_WINDEPLOYQT_EXECUTABLE} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${QT5_WINDEPLOYQT_EXECUTABLE} $<TARGET_FILE:${PROJECT_NAME}>)
 
-	add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-        COMMAND ${QT5_WINDEPLOYQT_EXECUTABLE} --qmldir ${CMAKE_CURRENT_SOURCE_DIR} $<TARGET_FILE:${CMAKE_PROJECT_NAME}>)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${QT5_WINDEPLOYQT_EXECUTABLE} --qmldir ${CMAKE_CURRENT_SOURCE_DIR} $<TARGET_FILE:${PROJECT_NAME}>)
 endif()

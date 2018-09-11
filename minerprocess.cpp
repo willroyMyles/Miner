@@ -9,7 +9,7 @@ and/or modify it under the terms of the GPLv3 License
 For more information see the LICENSE file
 *************************************************************************/
 
-#include <OpenCl/cl.h>
+#include <cl/cl.h>
 
 #include <QTimer>
 #include <QJsonDocument>
@@ -22,11 +22,6 @@ For more information see the LICENSE file
 
 #include "minerprocess.h"
 #include "cuda_gpu_list.h"
-#ifdef BUILD_AS_LIB
-#include "../../src/constants.h"
-#else
-#include "constants.h"
-#endif
 #include "dataprovider.h"
 
 float RandomFloat(float a, float b) {
@@ -329,7 +324,7 @@ void MinerProcess::startMining()
 	args << "--currency" << "monero7";
     args << "-o" << minerMan->poolUrlText;
 	if (minerMan->password.isEmpty())
-		args << "-p" << Constants::MINER_DEFAULT_PASSWORD;
+		args << "-p" << minerMan->password;
 	else
         args << "-p" << minerMan->passwordText;
     args << "-r" << minerMan->identifierText;

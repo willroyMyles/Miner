@@ -46,7 +46,9 @@ public:
 #ifdef QT_DEBUG
 
 	#ifdef BUILD_AS_LIB 
-		loadSettings(QDir(Globals::appWorkingDir).filePath(fileName));
+		//loadSettings(QDir(Globals::appWorkingDir).filePath(fileName));
+		loadSettings(QDir(QApplication::applicationDirPath()).filePath(fileName));
+
 	#else
       loadSettings(QDir(QApplication::applicationDirPath()).filePath(fileName));
 	#endif
