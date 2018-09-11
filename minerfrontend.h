@@ -4,6 +4,10 @@
 #include <QQmlEngine>
 #include <QWidget>
 #include "literals.h"
+#include <qquickview.h>
+#include <QCloseEvent>
+#include <QQuickWidget>
+
 
 class Literals;
 class MinerFrontend : public QWidget
@@ -13,9 +17,17 @@ public:
 	MinerFrontend(QWidget *parent = Q_NULLPTR);
 	~MinerFrontend();
 
+	void showMiner();
 private:
-//	QQuickWidget * minerWidget;
-//	Literals lit;
+	bool running = false;
+	QQuickWidget *qmlView;
+	QWidget *container;
+    QObject *minerObj;
 
+    void setWindowGeometry();
+
+protected:
+	bool event(QEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 };
 

@@ -9,7 +9,7 @@ project(Miner)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Network Quick Qml)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Network Quick Qml QuickWidgets)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -137,7 +137,7 @@ endif(MSVC)
 
 
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Network Qt5::Qml Qt5::Quick)
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Network Qt5::Qml Qt5::Quick Qt5::QuickWidgets)
 target_link_libraries(${PROJECT_NAME} ${LIBS})
 target_compile_options(${PROJECT_NAME} PUBLIC)
 

@@ -6,18 +6,16 @@ import "subclass"
 import MinerManager 1.0
 import DataProvider 1.0
 
-ApplicationWindow {
+Page {
     visible: true
     width: 640
     height: 480
     title: qsTr("JahMiner")
-    minimumHeight: 350
-    minimumWidth: 450
+    Layout.minimumHeight: 350
+    Layout.minimumWidth: 450
     id: app
 
     property bool startMining : false
-
-
 
     onStartMiningChanged: {
         if(startMining)  manager.startMining()

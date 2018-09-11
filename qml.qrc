@@ -24,5 +24,6 @@
         <file>subclass/SettingsNode.qml</file>
         <file>subclass/BasePage.qml</file>
         <file>subclass/CustomGraph.qml</file>
+        <file>subclass/CustomToolBar.qml</file>
     </qresource>
 </RCC>
