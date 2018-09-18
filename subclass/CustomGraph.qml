@@ -32,6 +32,10 @@ Pane {
 
     anchors.fill: parent
 
+    onProviderChanged: {
+        numOfValues = provider.chartMaxAmount();
+    }
+
     Connections{
         target: provider
         onDataAdded:{
@@ -75,47 +79,6 @@ Pane {
     }
 
 
-
-
-    //    DataPro {
-    //        id: provider
-    //        onDataAdded: {
-    //            canvas.requestPaint()
-    //            max = provider.getHigh()
-    //            numOfValues = provider.numofval()
-    //        }
-    //    }
-
-    //    MouseArea {
-    //        anchors.fill: parent
-    //        hoverEnabled: true
-    //        onClicked: {
-    //         //   provider.randomSeries()
-    //        }
-
-    //        onMouseXChanged: {
-    //            if ((mouseX % (width / numOfValues) | 0) == 0) {
-
-    //                //      console.log(( mouseX / (width/32) | 0 ))
-    //                var list = provider.getValues()
-    //                var x1
-    //                // var y1
-    //                for (var i = 0; i < list.length; i++) {
-    //                    var d1 = list[i]
-    //                    x1 = i * width / numOfValues
-    //                    if ((mouseX | 0) == x1) {
-
-    //                        console.log(d1)
-    //                        var y1 = (1.0 - d1 / 100) * height
-    //                        console.log("yaxis ", (y1 | 0))
-
-    //                    //    canvas.drawInfoNode(x1, y1)
-    //                    //    canvas.markDirty()
-    //                    }
-    //                }
-    //            }
-    //        }
-    //  }
     Canvas {
         id: canvas
         anchors.fill: parent
@@ -156,7 +119,6 @@ Pane {
                 ctx.stroke()
             }
             animate+= 3;
-            console.log(width/yaxiscount, animate)
             if(animate>=(width/yaxiscount)) animate =0;
             //    skipgraph = true;
         }
@@ -172,7 +134,7 @@ Pane {
             var min = provider.getLow()
             var max = provider.getHigh() //* control.xAxisMaxMultiplier
             var diff = max - min
-            if(diff <3) diff = 3;
+            if(diff <2) diff = 2;
 
             for (var i = 0; i < list.length; i++) {
                 var d1 = list[i]
@@ -203,7 +165,6 @@ Pane {
 
         function drawInfoNode(x, y) {
             var ctx = canvas.getContext("2d")
-            console.log(ctx, x, y, "called")
             ctx.fillStyle = "#55333333"
             ctx.fillRect(x + 10, y + 5, 50, 30)
         }

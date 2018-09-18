@@ -80,12 +80,12 @@ private:
     qreal maxValue_ = 0.00;
 	MinerProcess* process;
     ulong countMax =0;
-    int chartMaxValue = 120;
+    int chartMaxValue = 320;
 
 
     qreal high = 10.0;
     qreal low = 0.0;
-    qreal mean = 0.5;
+    qreal mean = 0.0;
     qreal latest = 0.0;
     qreal average = 0.0;
     QString cardName = "gfore 10-22";

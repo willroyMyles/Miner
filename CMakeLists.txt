@@ -141,7 +141,7 @@ target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Network Qt5::Qml Qt5::Qu
 target_link_libraries(${PROJECT_NAME} ${LIBS})
 target_compile_options(${PROJECT_NAME} PUBLIC)
 
-if (WIN32 AND !BUILD_MINER_AS_LIB)
+if (WIN32 AND NOT BUILD_MINER_AS_LIB)
     get_target_property(QT5_QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
     get_filename_component(QT5_WINDEPLOYQT_EXECUTABLE ${QT5_QMAKE_EXECUTABLE} PATH)
     set(QT5_WINDEPLOYQT_EXECUTABLE "${QT5_WINDEPLOYQT_EXECUTABLE}/windeployqt.exe")

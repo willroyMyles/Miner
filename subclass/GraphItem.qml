@@ -16,7 +16,6 @@ Pane {
     property DataProvider provider: null
 
     onProviderChanged: {
-        console.log(provider, "graph item")
         cg.provider = provider
     }
 
@@ -118,35 +117,11 @@ Pane {
                 Layout.fillWidth: true
 
                 numOfValues: provider.chartMaxAmount()
-                //  graphAxisColor: "#99000000"
-                //  graphFillColor: "#99000000"
-                //  graphLineColor: "#99000000"
                 max: high
                 xAxisMaxMultiplier: 2
                 skipgraph: false
                 backgroundColor: "#777"
             }
-
-            //            MChart {
-            //                id: areaChart
-
-            //                Layout.fillWidth: true
-            //                Layout.fillHeight: true
-            //                chartType: Charts.ChartType.LINE
-            //                chartWidth: areaChart.width
-
-            //            fillColor: Literals.chartBackgroundColor
-            //            labels: provider.getLabels()
-            //            values: provider.getValues()
-            //            strokeColor: "#0072c4e8"
-            //            pointColor: "#ffffff"
-
-            //                chartAnimated: false
-
-            //                onValuesChanged: {
-            //                    requestPaint()
-            //                }
-            //            }
         }
         Item {
             width: 20

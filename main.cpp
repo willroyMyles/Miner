@@ -6,6 +6,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <literal.h>
 
 
 int main(int argc, char *argv[])
@@ -13,13 +14,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
 
-    Literals lit;
+    Literal lit;
 
     QQmlApplicationEngine engine;
 	qmlRegisterType<DataProvider>("DataProvider", 1, 0, "DataProvider");
 	qmlRegisterType<MinerManager>("MinerManager", 1, 0, "MinerManager");
 	engine.rootContext()->setContextProperty("Literals",&lit);
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/mainStandalone.qml")));
+
     if (engine.rootObjects().isEmpty())
         return -1;
 

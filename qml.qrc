@@ -25,5 +25,6 @@
         <file>subclass/BasePage.qml</file>
         <file>subclass/CustomGraph.qml</file>
         <file>subclass/CustomToolBar.qml</file>
+        <file>mainStandalone.qml</file>
     </qresource>
 </RCC>

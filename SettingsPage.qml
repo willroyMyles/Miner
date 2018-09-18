@@ -12,11 +12,6 @@ BasePage {
     property alias identifier: identifierNode.textValue
 
 
-//    onWalletidChanged: {walletNode.textValue = walletid    }
-//    onPoolurlChanged: {poolNode.textValue = poolurl }
-//    onPasswordChanged: {passwordNode.textValue = password }
-//    onIdentifierChanged: {identifierNode.textValue = identifier }
-
     padding: 10
 
     background: Rectangle {
@@ -36,7 +31,6 @@ BasePage {
         ColumnLayout {
             id: col
             spacing: 1
-            //anchors.fill: scroll
             width: scroll.width
 
             Item {
